@@ -3,6 +3,9 @@ import tkinter as tk
 from typing import Union, Optional, Tuple
 
 from src.utils.common.paths import ProjectPaths
+from src.utils.common.names import (
+    WHITE_COLOR, BROWN_COLOR, METAL_GOLD_COLOR,
+    BLACK_COLOR, BEIGE_COLOR, GREEN_COLOR)
 
 paths = ProjectPaths()
 
@@ -259,6 +262,115 @@ class AppWindow:
         entry.pack(**pack_options)
         return entry
     
+    def create_button(
+        self,
+        parent: tk.Widget,
+        text: str = "",
+        command: Optional[callable] = None,
+        font: tuple = None,
+        bg: str = BROWN_COLOR,
+        fg: str = BLACK_COLOR,
+        activebackground: str = BROWN_COLOR,
+        activeforeground: str = BEIGE_COLOR,
+        highlightbackground: str = BEIGE_COLOR,
+        highlightcolor: str = BEIGE_COLOR,
+        side: str = None,
+        **kwargs
+    ) -> tk.Button:
+        """
+        Create a button with specified configuration.
+        
+        Args:
+            parent: Parent widget
+            text: Button text
+            command: Function to call when button is clicked
+            font: Text font tuple (family, size, style)
+            bg: Background color
+            fg: Foreground color
+            side: Pack side option
+            **kwargs: Additional button configuration options
+            
+        Returns:
+            tk.Button: Created button widget
+        """
+        button = tk.Button(
+            parent,
+            text=text,
+            command=command,
+            font=font,
+            bg=bg,
+            fg=fg,
+            activebackground = BROWN_COLOR,
+            activeforeground = BEIGE_COLOR,
+            highlightbackground = BEIGE_COLOR,
+            highlightcolor = BEIGE_COLOR,
+            **kwargs
+        )
+        
+        pack_options = {'side': side}
+        pack_options = {k: v for k, v in pack_options.items() if v is not None}
+        
+        button.pack(**pack_options)
+        return button
 
-
+    def create_string_var(self, initial_value: str = "") -> tk.StringVar:
+        """
+        Create a StringVar with an optional initial value.
+        
+        Args:
+            initial_value: Initial value for the StringVar
+            
+        Returns:
+            tk.StringVar: Created StringVar instance
+        """
+        return tk.StringVar(value=initial_value)
+    
+    def create_radio_button(
+        self,
+        parent: tk.Widget,
+        text: str = "",
+        variable: tk.StringVar = None,
+        value: str = "",
+        command: Optional[callable] = None,
+        font: tuple = None,
+        bg: str = "lightblue",
+        fg: str = "black",
+        side: str = None,
+        **kwargs
+    ) -> tk.Radiobutton:
+        """
+        Create a radio button with specified configuration.
+        
+        Args:
+            parent: Parent widget
+            text: Radio button text
+            variable: StringVar to associate with the radio button
+            value: Value for the radio button
+            command: Function to call when radio button is selected
+            font: Text font tuple (family, size, style)
+            bg: Background color
+            fg: Foreground color
+            side: Pack side option
+            **kwargs: Additional radio button configuration options
+            
+        Returns:
+            tk.Radiobutton: Created radio button widget
+        """
+        radio_button = tk.Radiobutton(
+            parent,
+            text=text,
+            variable=variable,
+            value=value,
+            command=command,
+            font=font,
+            bg=bg,
+            fg=fg,
+            **kwargs
+        )
+        
+        pack_options = {'side': side}
+        pack_options = {k: v for k, v in pack_options.items() if v is not None}
+        
+        radio_button.pack(**pack_options)
+        return radio_button
 
