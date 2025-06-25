@@ -1,0 +1,11 @@
+{
+    "root_dir": "/Users/adrianova/Desktop/Projects/EISSA/src",
+    "data_dir": "/Users/adrianova/Desktop/Projects/EISSA/src/data",
+    "config_dir": "/Users/adrianova/Desktop/Projects/EISSA/src/config",
+    "logs_dir": "/Users/adrianova/Desktop/Projects/EISSA/src/logs",
+    "images_dir": "/Users/adrianova/Desktop/Projects/EISSA/src/images",
+    "database_dir": "/Users/adrianova/Desktop/Projects/EISSA/src/data/db",
+    "config_file": "/Users/adrianova/Desktop/Projects/EISSA/src/config/paths_config.json",
+    "database_file": "/Users/adrianova/Desktop/Projects/EISSA/src/data/db/database.db",
+    "log_file": "/Users/adrianova/Desktop/Projects/EISSA/src/logs/app.log"
+}

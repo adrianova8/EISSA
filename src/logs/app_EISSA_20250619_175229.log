@@ -1,0 +1,5 @@
+2025-06-19 17:52:29 | DEBUG    | Este es un mensaje de DEBUG
+2025-06-19 17:52:29 | INFO     | Este es un mensaje de INFO
+2025-06-19 17:52:29 | WARNING  | Este es un mensaje de WARNING
+2025-06-19 17:52:29 | ERROR    | Este es un mensaje de ERROR
+2025-06-19 17:52:29 | CRITICAL | Este es un mensaje de CRITICAL

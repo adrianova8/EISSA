@@ -1,0 +1,5 @@
+2025-06-19 17:59:19 | DEBUG    | logger.py:107 | debug() | Este es un mensaje de DEBUG
+2025-06-19 17:59:19 | INFO     | logger.py:124 | info() | Este es un mensaje de INFO
+2025-06-19 17:59:19 | WARNING  | logger.py:141 | warning() | Este es un mensaje de WARNING
+2025-06-19 17:59:19 | ERROR    | logger.py:158 | error() | Este es un mensaje de ERROR
+2025-06-19 17:59:19 | CRITICAL | logger.py:175 | critical() | Este es un mensaje de CRITICAL

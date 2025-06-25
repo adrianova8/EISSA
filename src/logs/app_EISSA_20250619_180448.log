@@ -1,0 +1,5 @@
+2025-06-19 18:04:48 | DEBUG    | __init__.py:953 | format() | Este es un mensaje de DEBUG
+2025-06-19 18:04:48 | INFO     | __init__.py:953 | format() | Este es un mensaje de INFO
+2025-06-19 18:04:48 | WARNING  | __init__.py:953 | format() | Este es un mensaje de WARNING
+2025-06-19 18:04:48 | ERROR    | __init__.py:953 | format() | Este es un mensaje de ERROR
+2025-06-19 18:04:48 | CRITICAL | __init__.py:953 | format() | Este es un mensaje de CRITICAL

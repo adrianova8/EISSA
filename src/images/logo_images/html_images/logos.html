@@ -1,0 +1,301 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1000" width="1200" height="1000">
+    <defs>
+      <!-- Gradientes modernos -->
+      <linearGradient id="electricBlue" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" style="stop-color:#00D4FF;stop-opacity:1" />
+        <stop offset="50%" style="stop-color:#0099FF;stop-opacity:1" />
+        <stop offset="100%" style="stop-color:#0066CC;stop-opacity:1" />
+      </linearGradient>
+      
+      <linearGradient id="neonGold" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" style="stop-color:#FFE135;stop-opacity:1" />
+        <stop offset="50%" style="stop-color:#FFA726;stop-opacity:1" />
+        <stop offset="100%" style="stop-color:#FF7043;stop-opacity:1" />
+      </linearGradient>
+      
+      <linearGradient id="techGreen" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" style="stop-color:#00E676;stop-opacity:1" />
+        <stop offset="100%" style="stop-color:#00C853;stop-opacity:1" />
+      </linearGradient>
+      
+      <linearGradient id="purpleGlow" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" style="stop-color:#9C27B0;stop-opacity:1" />
+        <stop offset="100%" style="stop-color:#6A1B9A;stop-opacity:1" />
+      </linearGradient>
+      
+      <linearGradient id="modernGray" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" style="stop-color:#546E7A;stop-opacity:1" />
+        <stop offset="100%" style="stop-color:#37474F;stop-opacity:1" />
+      </linearGradient>
+      
+      <!-- Filtros de brillo -->
+      <filter id="glow">
+        <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+        <feMerge> 
+          <feMergeNode in="coloredBlur"/>
+          <feMergeNode in="SourceGraphic"/>
+        </feMerge>
+      </filter>
+      
+      <filter id="softGlow">
+        <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+        <feMerge> 
+          <feMergeNode in="coloredBlur"/>
+          <feMergeNode in="SourceGraphic"/>
+        </feMerge>
+      </filter>
+    </defs>
+    
+    <!-- OPCIÓN 1: Glassmorphism -->
+    <g transform="translate(0, 0)">
+      <text x="200" y="30" font-family="Arial, sans-serif" font-size="12" fill="#666" text-anchor="middle">Glassmorphism</text>
+      
+      <!-- Rombo principal -->
+      <path d="M50 100 L200 60 L350 100 L200 140 Z" 
+            fill="rgba(0,212,255,0.1)" 
+            stroke="url(#electricBlue)" 
+            stroke-width="2"
+            filter="url(#softGlow)"/>
+      
+      <!-- Flecha que cruza todo el rombo -->
+      <path d="M20 100 L160 100 L150 90 L160 100 L150 110 L240 100 L250 90 L240 100 L250 110 L380 100" 
+            fill="url(#electricBlue)" filter="url(#glow)"/>
+      
+      <!-- Texto -->
+      <text x="200" y="105" font-family="Arial, sans-serif" font-size="24" font-weight="300" 
+            fill="url(#electricBlue)" text-anchor="middle" letter-spacing="2px">EISSA</text>
+    </g>
+    
+    <!-- OPCIÓN 2: Neon Effect -->
+    <g transform="translate(400, 0)">
+      <text x="200" y="30" font-family="Arial, sans-serif" font-size="12" fill="#666" text-anchor="middle">Neon Effect</text>
+      
+      <!-- Rombo neón -->
+      <path d="M50 100 L200 60 L350 100 L200 140 Z" 
+            fill="none" 
+            stroke="url(#neonGold)" 
+            stroke-width="3"
+            filter="url(#glow)"/>
+      
+      <!-- Flecha que cruza todo el rombo -->
+      <path d="M20 100 L160 100 L150 90 L160 100 L150 110 L240 100 L250 90 L240 100 L250 110 L380 100" 
+            fill="url(#neonGold)" filter="url(#glow)"/>
+      
+      <!-- Texto con efecto neón -->
+      <text x="200" y="105" font-family="Arial, sans-serif" font-size="24" font-weight="bold" 
+            fill="url(#neonGold)" text-anchor="middle" filter="url(#glow)">EISSA</text>
+    </g>
+    
+    <!-- OPCIÓN 3: Tech Green -->
+    <g transform="translate(800, 0)">
+      <text x="200" y="30" font-family="Arial, sans-serif" font-size="12" fill="#666" text-anchor="middle">Tech Green</text>
+      
+      <!-- Rombo tech -->
+      <path d="M50 100 L200 60 L350 100 L200 140 Z" 
+            fill="rgba(0,230,118,0.05)" 
+            stroke="url(#techGreen)" 
+            stroke-width="2"/>
+      
+      <!-- Flecha que cruza todo el rombo -->
+      <path d="M20 100 L160 100 L150 90 L160 100 L150 110 L240 100 L250 90 L240 100 L250 110 L380 100" 
+            fill="url(#techGreen)"/>
+      
+      <!-- Texto tech -->
+      <text x="200" y="105" font-family="Arial, sans-serif" font-size="22" font-weight="500" 
+            fill="url(#techGreen)" text-anchor="middle" letter-spacing="2px">EISSA</text>
+    </g>
+    
+    <!-- OPCIÓN 4: Línea Simple -->
+    <g transform="translate(0, 200)">
+      <text x="200" y="30" font-family="Arial, sans-serif" font-size="12" fill="#666" text-anchor="middle">Línea Simple</text>
+      
+      <!-- Rombo -->
+      <path d="M50 100 L200 60 L350 100 L200 140 Z" 
+            fill="none" 
+            stroke="url(#purpleGlow)" 
+            stroke-width="2"/>
+      
+      <!-- Línea con puntas de flecha -->
+      <line x1="20" y1="100" x2="380" y2="100" stroke="url(#purpleGlow)" stroke-width="3"/>
+      <path d="M20 100 L30 95 L30 105 Z" fill="url(#purpleGlow)"/>
+      <path d="M380 100 L370 95 L370 105 Z" fill="url(#purpleGlow)"/>
+      
+      <!-- Texto -->
+      <text x="200" y="105" font-family="Arial, sans-serif" font-size="24" font-weight="400" 
+            fill="url(#purpleGlow)" text-anchor="middle" letter-spacing="3px">EISSA</text>
+    </g>
+    
+    <!-- OPCIÓN 5: Rayo Moderno -->
+    <g transform="translate(400, 200)">
+      <text x="200" y="30" font-family="Arial, sans-serif" font-size="12" fill="#666" text-anchor="middle">Rayo Moderno</text>
+      
+      <!-- Rombo -->
+      <path d="M50 100 L200 60 L350 100 L200 140 Z" 
+            fill="rgba(84,110,122,0.1)" 
+            stroke="url(#modernGray)" 
+            stroke-width="2"/>
+      
+      <!-- Rayo zigzag que cruza -->
+      <path d="M20 100 L140 100 L170 85 L200 100 L230 85 L260 100 L380 100" 
+            stroke="url(#modernGray)" stroke-width="4" fill="none"/>
+      <path d="M20 100 L30 95 L30 105 Z" fill="url(#modernGray)"/>
+      <path d="M380 100 L370 95 L370 105 Z" fill="url(#modernGray)"/>
+      
+      <!-- Texto corporativo -->
+      <text x="200" y="105" font-family="Arial, sans-serif" font-size="26" font-weight="600" 
+            fill="url(#modernGray)" text-anchor="middle">EISSA</text>
+    </g>
+    
+    <!-- OPCIÓN 6: Doble Flecha -->
+    <g transform="translate(800, 200)">
+      <text x="200" y="30" font-family="Arial, sans-serif" font-size="12" fill="#666" text-anchor="middle">Doble Flecha</text>
+      
+      <!-- Rombo -->
+      <path d="M50 100 L200 60 L350 100 L200 140 Z" 
+            fill="none" 
+            stroke="url(#electricBlue)" 
+            stroke-width="2"/>
+      
+      <!-- Flecha doble que cruza -->
+      <line x1="20" y1="100" x2="380" y2="100" stroke="url(#electricBlue)" stroke-width="2"/>
+      <path d="M20 100 L35 90 L35 95 L30 100 L35 105 L35 110 Z" fill="url(#electricBlue)"/>
+      <path d="M380 100 L365 90 L365 95 L370 100 L365 105 L365 110 Z" fill="url(#electricBlue)"/>
+      
+      <!-- Texto elegante -->
+      <text x="200" y="105" font-family="Arial, sans-serif" font-size="20" font-weight="300" 
+            fill="url(#electricBlue)" text-anchor="middle" letter-spacing="4px">EISSA</text>
+    </g>
+    
+    <!-- OPCIÓN 7: Flecha Gruesa -->
+    <g transform="translate(0, 400)">
+      <text x="200" y="30" font-family="Arial, sans-serif" font-size="12" fill="#666" text-anchor="middle">Flecha Gruesa</text>
+      
+      <!-- Rombo -->
+      <path d="M50 100 L200 60 L350 100 L200 140 Z" 
+            fill="none" 
+            stroke="url(#neonGold)" 
+            stroke-width="2"/>
+      
+      <!-- Flecha gruesa que cruza -->
+      <path d="M20 100 L360 100 L380 100 L370 90 L380 100 L370 110 Z" 
+            stroke="url(#neonGold)" stroke-width="6" fill="none"/>
+      <path d="M20 100 L30 95 L35 100 L30 105 Z" fill="url(#neonGold)"/>
+      
+      <!-- Texto -->
+      <text x="200" y="105" font-family="Arial, sans-serif" font-size="24" font-weight="500" 
+            fill="url(#neonGold)" text-anchor="middle" letter-spacing="1px">EISSA</text>
+    </g>
+    
+    <!-- OPCIÓN 8: Línea Punteada -->
+    <g transform="translate(400, 400)">
+      <text x="200" y="30" font-family="Arial, sans-serif" font-size="12" fill="#666" text-anchor="middle">Línea Punteada</text>
+      
+      <!-- Rombo -->
+      <path d="M50 100 L200 60 L350 100 L200 140 Z" 
+            fill="rgba(0,230,118,0.05)" 
+            stroke="url(#techGreen)" 
+            stroke-width="2"/>
+      
+      <!-- Línea punteada que cruza -->
+      <line x1="20" y1="100" x2="380" y2="100" stroke="url(#techGreen)" stroke-width="3" stroke-dasharray="5,5"/>
+      <path d="M20 100 L30 95 L30 105 Z" fill="url(#techGreen)"/>
+      <path d="M380 100 L370 95 L370 105 Z" fill="url(#techGreen)"/>
+      
+      <!-- Texto -->
+      <text x="200" y="105" font-family="Arial, sans-serif" font-size="22" font-weight="bold" 
+            fill="url(#techGreen)" text-anchor="middle" letter-spacing="2px">EISSA</text>
+    </g>
+    
+    <!-- OPCIÓN 9: Rayo Eléctrico -->
+    <g transform="translate(800, 400)">
+      <text x="200" y="30" font-family="Arial, sans-serif" font-size="12" fill="#666" text-anchor="middle">Rayo Eléctrico</text>
+      
+      <!-- Rombo -->
+      <path d="M50 100 L200 60 L350 100 L200 140 Z" 
+            fill="none" 
+            stroke="url(#purpleGlow)" 
+            stroke-width="2"
+            filter="url(#softGlow)"/>
+      
+      <!-- Rayo eléctrico que cruza -->
+      <path d="M20 100 L120 100 L140 90 L180 110 L220 90 L260 110 L280 100 L380 100" 
+            stroke="url(#purpleGlow)" stroke-width="3" fill="none" filter="url(#glow)"/>
+      <path d="M20 100 L30 95 L30 105 Z" fill="url(#purpleGlow)"/>
+      <path d="M380 100 L370 95 L370 105 Z" fill="url(#purpleGlow)"/>
+      
+      <!-- Texto retro -->
+      <text x="200" y="105" font-family="Arial, sans-serif" font-size="28" font-weight="bold" 
+            fill="url(#purpleGlow)" text-anchor="middle">EISSA</text>
+    </g>
+    
+    <!-- OPCIÓN 10: Línea con Sombra -->
+    <g transform="translate(0, 600)">
+      <text x="200" y="30" font-family="Arial, sans-serif" font-size="12" fill="#666" text-anchor="middle">Con Sombra</text>
+      
+      <!-- Sombra del rombo -->
+      <path d="M55 105 L205 65 L355 105 L205 145 Z" 
+            fill="rgba(0,0,0,0.1)"/>
+      
+      <!-- Rombo principal -->
+      <path d="M50 100 L200 60 L350 100 L200 140 Z" 
+            fill="white" 
+            stroke="url(#modernGray)" 
+            stroke-width="2"/>
+      
+      <!-- Línea con sombra -->
+      <line x1="22" y1="102" x2="382" y2="102" stroke="rgba(0,0,0,0.2)" stroke-width="3"/>
+      <line x1="20" y1="100" x2="380" y2="100" stroke="url(#modernGray)" stroke-width="3"/>
+      <path d="M20 100 L30 95 L30 105 Z" fill="url(#modernGray)"/>
+      <path d="M380 100 L370 95 L370 105 Z" fill="url(#modernGray)"/>
+      
+      <!-- Texto -->
+      <text x="200" y="105" font-family="Arial, sans-serif" font-size="24" font-weight="400" 
+            fill="url(#modernGray)" text-anchor="middle" letter-spacing="2px">EISSA</text>
+    </g>
+    
+    <!-- OPCIÓN 11: Gradiente en Flecha -->
+    <g transform="translate(400, 600)">
+      <text x="200" y="30" font-family="Arial, sans-serif" font-size="12" fill="#666" text-anchor="middle">Gradiente en Flecha</text>
+      
+      <!-- Rombo -->
+      <path d="M50 100 L200 60 L350 100 L200 140 Z" 
+            fill="rgba(255,225,53,0.05)" 
+            stroke="url(#neonGold)" 
+            stroke-width="2"/>
+      
+      <!-- Flecha con gradiente -->
+      <defs>
+        <linearGradient id="arrowGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" style="stop-color:#FFE135;stop-opacity:1" />
+          <stop offset="100%" style="stop-color:#FF7043;stop-opacity:1" />
+        </linearGradient>
+      </defs>
+      <line x1="20" y1="100" x2="380" y2="100" stroke="url(#arrowGradient)" stroke-width="4"/>
+      <path d="M20 100 L35 90 L35 110 Z" fill="url(#neonGold)"/>
+      <path d="M380 100 L365 90 L365 110 Z" fill="url(#neonGold)"/>
+      
+      <!-- Texto -->
+      <text x="200" y="105" font-family="Arial, sans-serif" font-size="22" font-weight="500" 
+            fill="url(#neonGold)" text-anchor="middle" letter-spacing="3px">EISSA</text>
+    </g>
+    
+    <!-- OPCIÓN 12: Ultra Minimalista -->
+    <g transform="translate(800, 600)">
+      <text x="200" y="30" font-family="Arial, sans-serif" font-size="12" fill="#666" text-anchor="middle">Ultra Minimalista</text>
+      
+      <!-- Rombo ultra simple -->
+      <path d="M50 100 L200 60 L350 100 L200 140 Z" 
+            fill="none" 
+            stroke="url(#electricBlue)" 
+            stroke-width="1"/>
+      
+      <!-- Línea simple que cruza -->
+      <line x1="20" y1="100" x2="380" y2="100" stroke="url(#electricBlue)" stroke-width="1"/>
+      <path d="M20 100 L25 98 L25 102 Z" fill="url(#electricBlue)"/>
+      <path d="M380 100 L375 98 L375 102 Z" fill="url(#electricBlue)"/>
+      
+      <!-- Texto ultra limpio -->
+      <text x="200" y="105" font-family="Arial, sans-serif" font-size="18" font-weight="200" 
+            fill="url(#electricBlue)" text-anchor="middle" letter-spacing="8px">EISSA</text>
+    </g>
+  </svg>
