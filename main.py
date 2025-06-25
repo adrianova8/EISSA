@@ -1,6 +1,6 @@
 import tkinter as tk
 
-from src.app import gadget_manager
+from src.app.gadgets_app import gadget_manager
 from src.app.window_app import AppWindow
 from src.utils.common.logger import CustomLogger
 from src.app.utils.frame_manager import FrameManager
