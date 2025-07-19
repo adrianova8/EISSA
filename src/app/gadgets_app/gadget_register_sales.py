@@ -2,11 +2,11 @@ import tkinter as tk
 from tkinter import Tk
 from typing import Dict, Any, Optional
 from dataclasses import dataclass
+from datetime import datetime
 
 from src.app.window_app import AppWindow
 from src.utils.common.logger import CustomLogger
 from src.app.utils.frame_manager import FrameManager
-from src.app.gadgets_app.gadget_visualize_sales import add_sale_to_visualizer
 from src.utils.common.names import (
     WHITE_COLOR, BROWN_COLOR, METAL_GOLD_COLOR,
     BLACK_COLOR, BEIGE_COLOR, GREEN_COLOR)
@@ -534,6 +534,49 @@ def setup_event_bindings(app: Tk) -> None:
     
     # Vincular tecla Escape para resetear campos
     app.bind('<Escape>', lambda e: sales_components.reset_fields())
+
+
+def add_sale_to_visualizer(frame_manager: FrameManager, amount: float, payment_method: str):
+    sales_content = frame_manager.get_frame('sales_content')
+    cash_total = frame_manager.get_frame('cash_total')
+    card_total = frame_manager.get_frame('card_total')
+    total_sales = frame_manager.get_frame('total_sales')
+    sales_canvas = frame_manager.get_frame('sales_canvas')
+
+    sale_frame = tk.Frame(sales_content, bg=BEIGE_COLOR, relief="solid", bd=1)
+    sale_frame.pack(fill="x", pady=3, padx=2)
+
+    time_now = datetime.now().strftime("%H:%M:%S")
+    sale_text = f"{time_now} - {amount:.2f}€ ({payment_method})"
+    tk.Label(
+        sale_frame,
+        text=sale_text,
+        font=("Times New Roman", 13),
+        bg=METAL_GOLD_COLOR,
+        fg=BLACK_COLOR,
+        padx=5,
+        pady=3
+    ).pack(anchor="w", fill="x")
+
+    try:
+        current_cash = float(cash_total.cget("text").replace("€", "").strip())
+        current_card = float(card_total.cget("text").replace("€", "").strip())
+    except ValueError:
+        current_cash = 0.0
+        current_card = 0.0
+
+    if payment_method == "Efectiu":
+        current_cash += amount
+        cash_total.config(text=f"{current_cash:.2f} €")
+    else:
+        current_card += amount
+        card_total.config(text=f"{current_card:.2f} €")
+
+    total_sales.config(text=f"{(current_cash + current_card):.2f} €")
+
+    sales_canvas.update_idletasks()
+    sales_canvas.configure(scrollregion=sales_canvas.bbox("all"))
+    sales_canvas.yview_moveto(1.0)
 
 
 def payment_container(app: Tk, app_window: AppWindow, frame_manager: FrameManager) -> None:

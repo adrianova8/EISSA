@@ -27,7 +27,7 @@ if __name__ == "__main__":
     gadget_manager.title_page_container(app, app_window)
     gadget_manager.date_container(app_window, frame_manager)
     gadget_manager.payment_container(app, app_window, frame_manager)
-    gadget_manager.sales_visualizer_container(app, app_window, frame_manager)    
+    gadget_manager.sales_visualizer_container(app_window, frame_manager)    
 
     # MainLoop (keeps the app running)
     app.mainloop()
