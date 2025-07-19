@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import Tk
-from typing import Dict, Any, Optional, Union
+from typing import Dict, Any, Optional
 from dataclasses import dataclass
 
 from src.app.window_app import AppWindow
@@ -192,7 +192,7 @@ class SalesRegisterComponents:
                 fg=GREEN_COLOR if change >= 0 else "red"
             )
         except ValueError:
-            self.change_display.config(text="Error", fg="red")
+            self.change_display.config(text="🚫", fg="red")
 
     def reset_fields(self):
         """Reset all form fields"""

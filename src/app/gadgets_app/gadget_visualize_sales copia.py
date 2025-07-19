@@ -6,8 +6,8 @@ from src.app.window_app import AppWindow
 from src.app.utils.frame_manager import FrameManager
 from src.app.gadgets_app.gadget_utils import current_time
 from src.utils.common.names import (
-    BROWN_COLOR, METAL_GOLD_COLOR,
-    BLACK_COLOR, BEIGE_COLOR
+    WHITE_COLOR, BROWN_COLOR, METAL_GOLD_COLOR,
+    BLACK_COLOR, BEIGE_COLOR, GREEN_COLOR
 )
 
 
