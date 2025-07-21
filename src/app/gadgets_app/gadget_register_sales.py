@@ -211,7 +211,7 @@ class SalesRegisterComponents:
             amount_str = self.amount_entry.get().replace(',', '.')
             amount = float(amount_str)
             payment_method = "Efectiu" if self.payment_var.get() == "efectiu" else "Targeta"
-            add_sale_to_visualizer(self.frame_manager, amount, payment_method)
+            add_sale_to_visualizer(self.frame_manager, self.app_window, amount, payment_method)
             self.reset_fields()
             logger.info(f"Venta guardada: {amount}€ - {payment_method}")
         except ValueError:
@@ -536,19 +536,19 @@ def setup_event_bindings(app: Tk) -> None:
     app.bind('<Escape>', lambda e: sales_components.reset_fields())
 
 
-def add_sale_to_visualizer(frame_manager: FrameManager, amount: float, payment_method: str):
+def add_sale_to_visualizer(frame_manager: FrameManager, app_window: AppWindow, amount: float, payment_method: str):
     sales_content = frame_manager.get_frame('sales_content')
     cash_total = frame_manager.get_frame('cash_total')
     card_total = frame_manager.get_frame('card_total')
     total_sales = frame_manager.get_frame('total_sales')
     sales_canvas = frame_manager.get_frame('sales_canvas')
 
-    sale_frame = tk.Frame(sales_content, bg=BEIGE_COLOR, relief="solid", bd=1)
+    sale_frame = app_window.create_frame(sales_content, bg=BEIGE_COLOR, relief="solid", bd=1)
     sale_frame.pack(fill="x", pady=3, padx=2)
 
     time_now = datetime.now().strftime("%H:%M:%S")
     sale_text = f"{time_now} - {amount:.2f}€ ({payment_method})"
-    tk.Label(
+    sales_label =  app_window.create_label(
         sale_frame,
         text=sale_text,
         font=("Times New Roman", 13),
@@ -556,7 +556,8 @@ def add_sale_to_visualizer(frame_manager: FrameManager, amount: float, payment_m
         fg=BLACK_COLOR,
         padx=5,
         pady=3
-    ).pack(anchor="w", fill="x")
+    )
+    sales_label.pack(anchor="w", fill="x")
 
     try:
         current_cash = float(cash_total.cget("text").replace("€", "").strip())

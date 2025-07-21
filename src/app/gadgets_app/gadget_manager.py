@@ -7,7 +7,9 @@ from src.app.gadgets_app.gadget_title import title_page_container
 from src.app.gadgets_app.gadget_date import date_container
 from src.app.gadgets_app.gadget_register_sales import payment_container
 from src.app.gadgets_app.gadget_visualize_sales import sales_visualizer_container
-
+from src.app.gadgets_app.gadget_history_navigator import historical_sales_navigator_container
+from src.app.gadgets_app.gadget_close_program import close_program_container
+from src.app.gadgets_app.gadget_open_new_day import open_new_day_container
 
 class GadgetManager:
     """
@@ -39,4 +41,17 @@ class GadgetManager:
     def sales_visualizer_container(app: tk.Tk, app_window: AppWindow, frame_manager: FrameManager) -> None:
         """Create and display the sales visualizer"""
         sales_visualizer_container(app, app_window, frame_manager)
+
+    @staticmethod
+    def historical_sales_navigator_container(app: tk.Tk, app_window: AppWindow, frame_manager: FrameManager) -> None:
+        historical_sales_navigator_container(app,  app_window, frame_manager)
+
+    @staticmethod
+    def close_program_container(app: tk.Tk, app_window: AppWindow, frame_manager: FrameManager) -> None:
+        close_program_container(app, app_window, frame_manager)
+
+    @staticmethod
+    def open_new_day_container(app: tk.Tk, app_window: AppWindow, frame_manager: FrameManager) -> None:
+        """Create and display the 'open new day' button"""
+        open_new_day_container(app, app_window, frame_manager)
 

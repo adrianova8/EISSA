@@ -103,18 +103,17 @@ def create_scroll_buttons(app_window: AppWindow, parent: tk.Frame, canvas: tk.Ca
     ]
 
     for text, command in buttons:
-        tk.Button(
+        scroll_button = app_window.create_button(
             nav_frame,
             text=text,
             font=("Times New Roman", 11, "bold"),
             bg=BROWN_COLOR,
             fg=METAL_GOLD_COLOR,
-            activebackground=METAL_GOLD_COLOR,
-            activeforeground=BROWN_COLOR,
             highlightbackground=BEIGE_COLOR,
             command=command,
             width=10
-        ).pack(side="left", padx=3)
+        )
+        scroll_button.pack(side="left", padx=3)
 
     nav_frame.pack(pady=5)
 
