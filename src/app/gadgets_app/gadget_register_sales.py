@@ -7,6 +7,7 @@ from datetime import datetime
 from src.app.window_app import AppWindow
 from src.utils.common.logger import CustomLogger
 from src.app.utils.frame_manager import FrameManager
+from src.data.db.sales_record_db import create_sales_table, insert_sale
 from src.utils.common.names import (
     WHITE_COLOR, BROWN_COLOR, METAL_GOLD_COLOR,
     BLACK_COLOR, BEIGE_COLOR, GREEN_COLOR)
@@ -211,7 +212,21 @@ class SalesRegisterComponents:
             amount_str = self.amount_entry.get().replace(',', '.')
             amount = float(amount_str)
             payment_method = "Efectiu" if self.payment_var.get() == "efectiu" else "Targeta"
+
+            # Obtener fecha y hora actual
+            now = datetime.now()
+            current_date = now.strftime("%Y-%m-%d")
+            current_time = now.strftime("%H:%M:%S")
+
+            try:
+                insert_sale(current_date, current_time, amount, payment_method)
+                logger.info(f"Venta guardada en BD: {amount}€ - {payment_method} - {current_date} {current_time}")
+            except Exception as db_error:
+                logger.error(f"Error al guardar en base de datos: {db_error}")
+                # Continúa con el proceso aunque falle la BD
+
             add_sale_to_visualizer(self.frame_manager, self.app_window, amount, payment_method)
+
             self.reset_fields()
             logger.info(f"Venta guardada: {amount}€ - {payment_method}")
         except ValueError:
@@ -548,7 +563,7 @@ def add_sale_to_visualizer(frame_manager: FrameManager, app_window: AppWindow, a
 
     time_now = datetime.now().strftime("%H:%M:%S")
     sale_text = f"{time_now} - {amount:.2f}€ ({payment_method})"
-    sales_label =  app_window.create_label(
+    sales_label = app_window.create_label(
         sale_frame,
         text=sale_text,
         font=("Times New Roman", 13),
@@ -589,6 +604,13 @@ def payment_container(app: Tk, app_window: AppWindow, frame_manager: FrameManage
         app_window (AppWindow): Window manager instance
         frame_manager (FrameManager): Frame management instance
     """
+   # Inicializar la base de datos
+    try:
+        create_sales_table()
+        logger.info("Base de datos inicializada correctamente")
+    except Exception as e:
+        logger.error(f"Error al inicializar la base de datos: {e}")
+
     # Create register sales panel
     entries_frame = create_register_sales_panel(app, app_window, frame_manager)
 

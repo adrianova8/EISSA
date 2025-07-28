@@ -31,8 +31,7 @@ def update_display(state):
         font=("Times New Roman", 16),
         bg=BROWN_COLOR,
         fg=METAL_GOLD_COLOR,
-        pady=5
-    ).pack(fill="x", pady=(0, 12))
+    ).pack(fill="x")
 
     # Datos simulados
     if selected_date.date() == current_date.date():
@@ -54,15 +53,13 @@ def update_display(state):
 
     for sale in sales_data:
         sale_frame = app_window.create_frame(content_frame, bg=METAL_GOLD_COLOR, relief="solid", bd=1)
-        sale_frame.pack(fill="x", pady=2, padx=5)
+        sale_frame.pack(fill="x")
         app_window.create_label(
             sale_frame,
             text=f"{sale['time']} - {sale['amount']:.2f}€ ({sale['method']})",
             font=("Times New Roman", 11),
             bg=METAL_GOLD_COLOR,
             fg=BLACK_COLOR,
-            padx=10,
-            pady=3
         ).pack(anchor="w")
 
         if sale['method'] == "Efectiu":
@@ -71,25 +68,23 @@ def update_display(state):
             total_targeta += sale['amount']
 
     totals_frame = app_window.create_frame(content_frame, bg=BEIGE_COLOR)
-    totals_frame.pack(fill="x", pady=10)
+    totals_frame.pack(fill="x")
 
     app_window.create_label(
         totals_frame,
         text=f"Efectiu: {total_efectiu:.2f}€",
         font=("Times New Roman", 12, "bold"),
         bg=BROWN_COLOR,
-        fg=METAL_GOLD_COLOR,
-        pady=3
-    ).pack(fill="x", pady=1)
+        fg=METAL_GOLD_COLOR
+    ).pack(fill="x")
 
     app_window.create_label(
         totals_frame,
         text=f"Targeta: {total_targeta:.2f}€",
         font=("Times New Roman", 12, "bold"),
         bg=BROWN_COLOR,
-        fg=METAL_GOLD_COLOR,
-        pady=3
-    ).pack(fill="x", pady=1)
+        fg=METAL_GOLD_COLOR
+    ).pack(fill="x")
 
     app_window.create_label(
         totals_frame,
@@ -97,10 +92,11 @@ def update_display(state):
         font=("Times New Roman", 14, "bold"),
         bg=GREEN_COLOR,
         fg=WHITE_COLOR,
-        pady=5
-    ).pack(fill="x", pady=3)
+    ).pack(fill="x")
 
 def historical_sales_navigator_container(app, app_window: AppWindow, frame_manager: FrameManager):
+
+    # Initialize context
     current_date = datetime.now()
     selected_date = current_date
 
@@ -113,11 +109,12 @@ def historical_sales_navigator_container(app, app_window: AppWindow, frame_manag
         "content_frame": None,
         "date_label": None
     }
-
     parent = frame_manager.get_frame('payment_frame')
 
-    frame = app_window.create_frame(parent, bg=BEIGE_COLOR, pady=11, padx=11, side="top")
+    # Historical visualizer frame
+    frame = app_window.create_frame(parent, bg=BEIGE_COLOR, side="top")
 
+    # Historical visualizer title
     app_window.create_label(
         frame,
         text="Històric de Vendes",
@@ -126,8 +123,10 @@ def historical_sales_navigator_container(app, app_window: AppWindow, frame_manag
         fg=BLACK_COLOR
     )
 
-    nav_frame = app_window.create_frame(frame, bg=BEIGE_COLOR, pady=5)
+    # Historical visualizer navigator frame
+    nav_frame = app_window.create_frame(frame, bg=BEIGE_COLOR)
 
+    # Functions to navigate through dates
     def go_previous():
         state["selected_date"] -= timedelta(days=1)
         update_display(state)
@@ -142,22 +141,22 @@ def historical_sales_navigator_container(app, app_window: AppWindow, frame_manag
         update_display(state)
 
     app_window.create_button(nav_frame, "◀ Anterior", command=go_previous, font=("Times New Roman", 12),
-                             bg=BROWN_COLOR, fg=METAL_GOLD_COLOR, highlightbackground=BEIGE_COLOR, width=8).pack(side="left", padx=3)
+                             bg=BROWN_COLOR, fg=METAL_GOLD_COLOR, highlightbackground=BEIGE_COLOR, width=8).pack(side="left")
 
     date_label = app_window.create_label(nav_frame, text=selected_date.strftime('%d/%m/%Y'),
                                          font=("Times New Roman", 16), bg=BEIGE_COLOR, fg=BLACK_COLOR)
-    date_label.pack(side="left", padx=10)
+    date_label.pack(side="left")
     state["date_label"] = date_label
 
     app_window.create_button(nav_frame, "Següent ▶", command=go_next, font=("Times New Roman", 12),
-                             bg=BROWN_COLOR, fg=METAL_GOLD_COLOR, highlightbackground=BEIGE_COLOR, width=8).pack(side="left", padx=3)
+                             bg=BROWN_COLOR, fg=METAL_GOLD_COLOR, highlightbackground=BEIGE_COLOR, width=8).pack(side="left")
 
     app_window.create_button(nav_frame, "Avui", command=go_today, font=("Times New Roman", 12),
-                             bg=BROWN_COLOR, fg=METAL_GOLD_COLOR, highlightbackground=BEIGE_COLOR, width=8).pack(side="left", padx=3)
+                             bg=BROWN_COLOR, fg=METAL_GOLD_COLOR, highlightbackground=BEIGE_COLOR, width=8).pack(side="left")
 
-    nav_frame.pack(pady=5)
+    nav_frame.pack()
 
-    info_frame = app_window.create_frame(frame, bg=BEIGE_COLOR, pady=5)
+    info_frame = app_window.create_frame(frame, bg=BEIGE_COLOR)
     canvas = tk.Canvas(info_frame, bg=BEIGE_COLOR, width=300, height=400,
                        highlightthickness=2, highlightbackground=BROWN_COLOR)
     scrollbar = tk.Scrollbar(info_frame, orient="vertical", command=canvas.yview)
@@ -178,7 +177,7 @@ def historical_sales_navigator_container(app, app_window: AppWindow, frame_manag
 
     canvas.pack(side="left", fill="both", expand=True)
     scrollbar.pack(side="right", fill="y")
-    info_frame.pack(fill="both", expand=True, pady=5)
+    info_frame.pack(fill="both", expand=True)
 
     update_display(state)
 

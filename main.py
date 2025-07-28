@@ -12,17 +12,19 @@ if __name__ == "__main__":
     logger = CustomLogger()
     logger.info("Starting the application...")
     app = tk.Tk()
-    frame_manager = FrameManager() 
+    app.grid_rowconfigure(0, weight=1)
+    app.grid_columnconfigure(0, weight=1)
+    frame_manager = FrameManager()
 
     # Window configuration
     app_window = AppWindow(app)
 
     # Title, dimensions, background color, frames for the window
     app_window.window_title(BUSINESS_NAME)
-    app_window.window_dimensions(screen_division=0.5, height_ratio=0.5, horizontal_position=2, vertical_position=2)
+    app_window.window_dimensions(width_ratio=1.0, height_ratio=1.0)  # Pantalla completa
     app_window.window_bg_color(MEDIUM_GRAY_COLOR)
 
-    # Gadgets call
+    # # gadgets call
     gadget_manager.app_logo_container(app, app_window, frame_manager)
     gadget_manager.title_page_container(app, app_window)
     gadget_manager.date_container(app_window, frame_manager)
