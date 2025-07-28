@@ -37,14 +37,14 @@ def date_container(app_window: AppWindow, frame_manager: FrameManager) -> None:
             header_frame,
             bg=BROWN_COLOR,  
             side="right",
-            padx=20
+            padx=10
         )
 
         # Create inner date frame
         date_inner_frame = app_window.create_frame(
             date_outer_frame,
             bg=BROWN_COLOR,
-            padx=15,
+            padx=10
         )
         date_inner_frame.pack()
 

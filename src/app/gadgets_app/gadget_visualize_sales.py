@@ -15,7 +15,7 @@ logger = CustomLogger()
 
 def create_sales_panel(app_window: AppWindow, frame_manager: FrameManager) -> tk.Frame:
     center_container = frame_manager.get_frame('center_container')
-    sales_panel = app_window.create_frame(center_container, bg=BEIGE_COLOR, pady=21, padx=11, side="left")
+    sales_panel = app_window.create_frame(center_container, bg=BEIGE_COLOR, side="left")
     frame_manager.register_frame('sales_panel', sales_panel)
     return sales_panel
 

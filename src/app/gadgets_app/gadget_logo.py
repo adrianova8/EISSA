@@ -41,9 +41,7 @@ def app_logo_container(app: Tk, app_window: AppWindow, frame_manager: FrameManag
             header_frame: Frame = app_window.create_frame(
                 app, 
                 bg=MEDIUM_GRAY_COLOR,
-                fill="x",
-                padx=5,
-                pady=8
+                fill="x"
             )
             frame_manager.register_frame('header', header_frame)
 
@@ -51,8 +49,7 @@ def app_logo_container(app: Tk, app_window: AppWindow, frame_manager: FrameManag
         logo_frame: Frame = app_window.create_frame(
             header_frame,
             bg=MEDIUM_GRAY_COLOR,
-            side="left",
-            padx=5
+            side="left"
         )
 
         # Create and configure logo label
@@ -62,7 +59,6 @@ def app_logo_container(app: Tk, app_window: AppWindow, frame_manager: FrameManag
             bg=BROWN_COLOR,
         )
         logo_label.image = logo  # Keep reference to prevent garbage collection
-        logo_label.pack()  # Position label in container
         
         return header_frame
         

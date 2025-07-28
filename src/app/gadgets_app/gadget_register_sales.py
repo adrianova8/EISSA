@@ -248,9 +248,8 @@ class SalesInterfaceConfigurator:
                 container_config=WidgetConfig(
                     widget_type='frame',
                     bg=BEIGE_COLOR,
-                    fill="both",
+                    fill="x",
                     expand=True,
-                    padx=400
                 )
             ),
             'center_container': SectionConfig(
@@ -264,8 +263,8 @@ class SalesInterfaceConfigurator:
                 container_config=WidgetConfig(
                     widget_type='frame',
                     bg=BEIGE_COLOR,
-                    pady=20,
-                    padx=20,
+                    pady=10,
+                    padx=10,
                     side="left"
                 )
             ),
@@ -462,12 +461,12 @@ def create_register_sales_panel(app: Tk, app_window: AppWindow, frame_manager: F
     # Crear jerarquía de paneles
     panels = {}
     
-    # Main container
+    # # Main container
     main_components = section_builder.build_section(app, panel_configs['main_container'])
     panels['main_container'] = main_components['container']
     frame_manager.register_frame('main_container', panels['main_container'])
     
-    # Center container
+    # # Center container
     center_components = section_builder.build_section(panels['main_container'], panel_configs['center_container'])
     panels['center_container'] = center_components['container']
     frame_manager.register_frame('center_container', panels['center_container'])
