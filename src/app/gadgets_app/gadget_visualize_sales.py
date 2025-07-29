@@ -135,7 +135,7 @@ def add_sale_to_visualizer_only(app_window: AppWindow, frame_manager: FrameManag
     sale_frame.pack(fill="x", pady=3, padx=2)
 
     # Crear texto de la venta
-    sale_text = f"{time_str} - {amount:.2f}€ ({payment_method})"
+    sale_text = f"[{time_str}] {amount:.2f}€ ({payment_method})"
     sales_label = app_window.create_label(
         sale_frame,
         text=sale_text,

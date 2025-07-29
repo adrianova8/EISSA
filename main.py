@@ -35,8 +35,11 @@ if __name__ == "__main__":
     gadget_manager.payment_container(app, app_window, frame_manager)
     gadget_manager.historical_sales_navigator_container(app, app_window, frame_manager)
     gadget_manager.sales_visualizer_container(app_window, frame_manager)
-    gadget_manager.open_new_day_container(app, app_window, frame_manager)
+    # gadget_manager.open_new_day_container(app, app_window, frame_manager)
     gadget_manager.close_program_container(app, app_window, frame_manager)
+
+    # Añadir un botón que permita descargar en formato Excel los datos de venta que se han hecho a lo largo del dia de hoy
+    gadget_manager.export_excel_sales_container(app_window, frame_manager)
     
     # Bindings
     app.bind("<Escape>", on_escape)
