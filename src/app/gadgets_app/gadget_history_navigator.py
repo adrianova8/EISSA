@@ -1,11 +1,17 @@
+import sqlite3
 import tkinter as tk
 from datetime import datetime, timedelta
 from src.app.window_app import AppWindow
+from src.utils.common.paths import ProjectPaths
 from src.app.utils.frame_manager import FrameManager
 from src.utils.common.names import (
     WHITE_COLOR, BROWN_COLOR, METAL_GOLD_COLOR,
     BLACK_COLOR, BEIGE_COLOR, GREEN_COLOR
 )
+
+paths = ProjectPaths()
+
+DB_NAME = f"{paths.database_dir}/sales.db"
 
 def update_display(state):
     app_window = state["app_window"]
@@ -13,6 +19,8 @@ def update_display(state):
     current_date = state["current_date"]
     content_frame = state["content_frame"]
     date_label = state["date_label"]
+    canvas = state["canvas"]
+    db_path =  DB_NAME
 
     # Actualizar fecha
     date_str = selected_date.strftime('%d/%m/%Y')
@@ -33,20 +41,31 @@ def update_display(state):
         fg=METAL_GOLD_COLOR,
     ).pack(fill="x")
 
-    # Datos simulados
-    if selected_date.date() == current_date.date():
-        sales_data = [
-            {"time": "09:30", "amount": 15.50, "method": "Efectiu"},
-            {"time": "11:45", "amount": 8.75, "method": "Targeta"},
-            {"time": "14:20", "amount": 22.30, "method": "Efectiu"},
-            {"time": "16:45", "amount": 12.00, "method": "Targeta"}
-        ]
-    else:
-        sales_data = [
-            {"time": "10:15", "amount": 12.00, "method": "Efectiu"},
-            {"time": "13:30", "amount": 18.25, "method": "Targeta"},
-            {"time": "16:45", "amount": 9.75, "method": "Efectiu"}
-        ]
+    # Consulta a la base de datos
+    sales_data = []
+    try:
+        conn = sqlite3.connect(db_path)
+        cursor = conn.cursor()
+
+        query = """
+            SELECT time, amount, method
+            FROM sales
+            WHERE date = ?
+            ORDER BY time ASC
+        """
+        cursor.execute(query, (selected_date.strftime("%Y-%m-%d"),))
+        rows = cursor.fetchall()
+
+        for row in rows:
+            sales_data.append({
+                "time": row[0],
+                "amount": row[1],
+                "method": row[2]
+            })
+
+        conn.close()
+    except sqlite3.Error as e:
+        print("Error accedint a la base de dades:", e)
 
     total_efectiu = 0
     total_targeta = 0
@@ -73,7 +92,7 @@ def update_display(state):
     app_window.create_label(
         totals_frame,
         text=f"Efectiu: {total_efectiu:.2f}€",
-        font=("Times New Roman", 12, "bold"),
+        font=("Times New Roman", 12),
         bg=BROWN_COLOR,
         fg=METAL_GOLD_COLOR
     ).pack(fill="x")
@@ -81,7 +100,7 @@ def update_display(state):
     app_window.create_label(
         totals_frame,
         text=f"Targeta: {total_targeta:.2f}€",
-        font=("Times New Roman", 12, "bold"),
+        font=("Times New Roman", 12),
         bg=BROWN_COLOR,
         fg=METAL_GOLD_COLOR
     ).pack(fill="x")
@@ -89,10 +108,14 @@ def update_display(state):
     app_window.create_label(
         totals_frame,
         text=f"TOTAL: {(total_efectiu + total_targeta):.2f}€",
-        font=("Times New Roman", 14, "bold"),
+        font=("Times New Roman", 14),
         bg=GREEN_COLOR,
         fg=WHITE_COLOR,
     ).pack(fill="x")
+
+    # Scroll al final
+    canvas.update_idletasks()
+    canvas.yview_moveto(1.0)
 
 def historical_sales_navigator_container(app, app_window: AppWindow, frame_manager: FrameManager):
 
@@ -161,6 +184,7 @@ def historical_sales_navigator_container(app, app_window: AppWindow, frame_manag
                        highlightthickness=2, highlightbackground=BROWN_COLOR)
     scrollbar = tk.Scrollbar(info_frame, orient="vertical", command=canvas.yview)
     canvas.configure(yscrollcommand=scrollbar.set)
+    state["canvas"] = canvas
 
     content_frame = app_window.create_frame(canvas, bg=BEIGE_COLOR)
     canvas_window = canvas.create_window((0, 0), window=content_frame, anchor="nw")
