@@ -47,7 +47,7 @@ class ReportGenerator:
         story = []
         
         # Título
-        story.append(Paragraph(f"Report de vendes - {date}", styles['Title']))
+        story.append(Paragraph(f"Informe de vendes - {date}", styles['Title']))
         
         # Tabla de datos
         data = [['DIA', 'HORA', 'IMPORT', 'METODE DE PAGAMENT']]

@@ -9,6 +9,6 @@ class Mailer:
         self.yag = yagmail.SMTP(self.user, self.password)
 
     def send_report(self, date, excel_path, pdf_path):
-        subject = f"Report Diari de Vendes EISSA {date}"
-        body = "Adjunt el report diari en format Excel i PDF."
+        subject = f"Informe Diari de Vendes EISSA {date}"
+        body = "Adjunt l'informe diari en format Excel i PDF."
         self.yag.send(to=self.receiver, subject=subject, contents=body, attachments=[excel_path, pdf_path])
