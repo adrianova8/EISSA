@@ -63,14 +63,14 @@ class CustomLogger:
             datetime_str = datetime.now().strftime('%Y%m%d_%H%M%S')
             
             # Rotating file handler
-            file_handler = RotatingFileHandler(
-                filename=log_dir / f'app_{BUSINESS_SHORT_NAME}_{datetime_str}.log',
-                maxBytes=10*1024*1024,
-                backupCount=5,
-                encoding='utf-8'
-            )
-            file_handler.setLevel(logging.DEBUG)
-            file_handler.setFormatter(formatter)
+            # file_handler = RotatingFileHandler(
+            #     filename=log_dir / f'app_{BUSINESS_SHORT_NAME}_{datetime_str}.log',
+            #     maxBytes=10*1024*1024,
+            #     backupCount=5,
+            #     encoding='utf-8'
+            # )
+            # file_handler.setLevel(logging.DEBUG)
+            # file_handler.setFormatter(formatter)
             
             # Console handler
             console_handler = logging.StreamHandler(sys.stdout)
@@ -81,7 +81,7 @@ class CustomLogger:
             self._logger.handlers = []
             
             # Add handlers
-            self._logger.addHandler(file_handler)
+            # self._logger.addHandler(file_handler)
             self._logger.addHandler(console_handler)
             
         except OSError as e:

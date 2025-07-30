@@ -48,7 +48,7 @@ def export_sales_to_excel(date=None):
         if not export_dir:
             messagebox.showerror("Error", "No s'ha pogut crear el directori d'exportació")
             return False
-            
+
         conn = sqlite3.connect(DB_NAME)
         
         # Query to get the database data
@@ -132,7 +132,6 @@ def export_excel_sales_container(app_window: AppWindow, frame_manager: FrameMana
     export_frame = app_window.create_frame(
         center_container,
         bg=BEIGE_COLOR
-
     )
     
     # Load and resize the Excel icon
