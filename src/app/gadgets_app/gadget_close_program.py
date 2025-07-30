@@ -1,9 +1,8 @@
 import tkinter as tk
+
 from src.app.window_app import AppWindow
 from src.app.utils.frame_manager import FrameManager
-from src.utils.common.names import (
-    BROWN_COLOR, METAL_GOLD_COLOR, BEIGE_COLOR
-)
+from src.utils.common.names import (BROWN_COLOR, METAL_GOLD_COLOR, BEIGE_COLOR)
 
 def close_program_container(app: tk.Tk, app_window: AppWindow, frame_manager: FrameManager) -> None:
     """

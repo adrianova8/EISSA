@@ -1,23 +1,20 @@
 import tkinter as tk
 from tkinter import Tk
-from typing import Dict, Any, Optional
-from dataclasses import dataclass
 from datetime import datetime
+from dataclasses import dataclass
+from typing import Dict, Any, Optional
 
 from src.app.window_app import AppWindow
 from src.utils.common.logger import CustomLogger
 from src.app.utils.frame_manager import FrameManager
 from src.data.db.sales_record_db import create_sales_table, insert_sale
-from src.utils.common.names import (
-    WHITE_COLOR, BROWN_COLOR, METAL_GOLD_COLOR,
-    BLACK_COLOR, BEIGE_COLOR, GREEN_COLOR)
+from src.utils.common.names import (WHITE_COLOR, BROWN_COLOR, METAL_GOLD_COLOR, BLACK_COLOR, BEIGE_COLOR, GREEN_COLOR)
 
 logger = CustomLogger()
 
-
 @dataclass
 class WidgetConfig:
-    """Configuración para la creación de widgets"""
+    """Configuration for widget creation"""
     widget_type: str
     text: Optional[str] = None
     font: Optional[tuple] = None
@@ -43,7 +40,7 @@ class WidgetConfig:
 
 @dataclass
 class SectionConfig:
-    """Configuración completa para una sección de la interfaz"""
+    """Complete configuration for a section of the interface"""
     container_config: WidgetConfig
     label_frame_config: Optional[WidgetConfig] = None
     label_config: Optional[WidgetConfig] = None
@@ -53,13 +50,12 @@ class SectionConfig:
 
 
 class WidgetFactory:
-    """Factory para crear widgets de manera consistente"""
-    
+    """Factory for creating widgets consistently"""    
     def __init__(self, app_window: AppWindow):
         self.app_window = app_window
     
     def create_widget(self, parent: tk.Widget, config: WidgetConfig) -> tk.Widget:
-        """Crear un widget basado en su configuración"""
+        """Create a widget based on its configuration"""
         # Extraer parámetros de configuración
         widget_params = self._extract_widget_params(config)
         pack_params = self._extract_pack_params(config)
@@ -74,7 +70,7 @@ class WidgetFactory:
         return widget
     
     def _create_widget_by_type(self, parent: tk.Widget, config: WidgetConfig, params: Dict[str, Any]) -> tk.Widget:
-        """Crear widget específico según su tipo"""
+        """Create a specific widget based on its type"""
         widget_type = config.widget_type.lower()
         
         if widget_type == 'frame':
@@ -93,7 +89,7 @@ class WidgetFactory:
             raise ValueError(f"Tipo de widget no soportado: {widget_type}")
     
     def _extract_widget_params(self, config: WidgetConfig) -> Dict[str, Any]:
-        """Extraer parámetros específicos para la creación del widget"""
+        """Extract specific parameters for widget creation"""
         params = {}
         widget_attrs = ['text', 'font', 'bg', 'fg', 'width', 'height', 'bd', 
                        'expand', 'fill', 'variable', 'value', 'command', 
@@ -108,7 +104,7 @@ class WidgetFactory:
         return params
     
     def _extract_pack_params(self, config: WidgetConfig) -> Dict[str, Any]:
-        """Extraer parámetros para el método pack"""
+        """Extract parameters for the pack method"""
         params = {}
         pack_attrs = ['side', 'padx', 'pady', 'expand', 'fill']
         
@@ -121,13 +117,12 @@ class WidgetFactory:
 
 
 class SectionBuilder:
-    """Builder para crear secciones completas de la interfaz"""
-    
+    """Builder to create complete interface sections"""
     def __init__(self, widget_factory: WidgetFactory):
         self.widget_factory = widget_factory
     
     def build_section(self, parent: tk.Widget, config: SectionConfig) -> Dict[str, tk.Widget]:
-        """Construir una sección completa y retornar sus componentes"""
+        """Build a complete section and return its components"""
         components = {}
         
         # 1. Crear contenedor principal
@@ -163,7 +158,7 @@ class SectionBuilder:
 
 
 class SalesRegisterComponents:
-    """Clase para mantener referencias a los widgets del registro de ventas"""
+    """Class to hold references to the sales register widgets"""
     def __init__(self):
         self.amount_entry = None
         self.received_entry = None
@@ -220,7 +215,7 @@ class SalesRegisterComponents:
 
             try:
                 insert_sale(current_date, current_time, amount, payment_method)
-                logger.info(f"Venta guardada en BD: {amount}€ - {payment_method} - {current_date} {current_time}")
+                logger.info(f"Venda guardada a la BD: {amount}€ - {payment_method} - {current_date} {current_time}")
             except Exception as db_error:
                 logger.error(f"Error al guardar en base de datos: {db_error}")
                 # Continúa con el proceso aunque falle la BD
@@ -228,7 +223,7 @@ class SalesRegisterComponents:
             add_sale_to_visualizer(self.frame_manager, self.app_window, amount, payment_method)
 
             self.reset_fields()
-            logger.info(f"Venta guardada: {amount}€ - {payment_method}")
+            logger.info(f"Venda guardada: {amount}€ - {payment_method}")
         except ValueError:
             logger.info("Error: Introdueix un import vàlid.")
 
@@ -242,7 +237,7 @@ class SalesInterfaceConfigurator:
     
     @staticmethod
     def get_panel_configs() -> Dict[str, SectionConfig]:
-        """Obtener configuraciones para los paneles principales"""
+        """Get configurations for the main panels"""
         return {
             'main_container': SectionConfig(
                 container_config=WidgetConfig(
@@ -281,7 +276,7 @@ class SalesInterfaceConfigurator:
     
     @staticmethod
     def get_widget_sections_configs() -> Dict[str, SectionConfig]:
-        """Obtener configuraciones para las secciones de widgets"""
+        """Get configurations for the widget sections"""
         return {
             'amount_section': SectionConfig(
                 container_config=WidgetConfig(
@@ -426,7 +421,7 @@ class SalesInterfaceConfigurator:
     
     @staticmethod
     def get_radio_button_configs(payment_var: tk.StringVar) -> Dict[str, WidgetConfig]:
-        """Obtener configuraciones para los radio buttons"""
+        """Get configurations for the radio buttons"""
         return {
             'efectiu_radio': WidgetConfig(
                 widget_type='radiobutton',
@@ -452,13 +447,13 @@ class SalesInterfaceConfigurator:
 
 
 def create_register_sales_panel(app: Tk, app_window: AppWindow, frame_manager: FrameManager) -> tk.Frame:
-    """Crear el panel principal del registro de ventas usando el nuevo sistema"""
+    """Create the main sales register panel using the new system"""
     widget_factory = WidgetFactory(app_window)
     section_builder = SectionBuilder(widget_factory)
     
     panel_configs = SalesInterfaceConfigurator.get_panel_configs()
     
-    # Crear jerarquía de paneles
+    # Hirearchy panels
     panels = {}
     
     # # Main container
@@ -485,68 +480,67 @@ def create_register_sales_panel(app: Tk, app_window: AppWindow, frame_manager: F
 
 
 def create_register_sales_widgets(app_window: AppWindow, entries_frame: tk.Frame, frame_manager: FrameManager) -> None:
-    """Crear todos los widgets del registro de ventas usando el nuevo sistema"""
-    
-    # Guardar referencias necesarias
+    """Create all sales register widgets using the new system"""    
+    # Keep references to the components
     sales_components.app_window = app_window
     sales_components.frame_manager = frame_manager
     
     widget_factory = WidgetFactory(app_window)
     section_builder = SectionBuilder(widget_factory)
     
-    # Obtener configuraciones
+    # Configuraciones de widgets y botones
     widget_configs = SalesInterfaceConfigurator.get_widget_sections_configs()
     button_configs = SalesInterfaceConfigurator.get_button_configs()
     
-    # 1. Crear sección de importe
+    # 1. Create section for amount to collect
     amount_components = section_builder.build_section(entries_frame, widget_configs['amount_section'])
     sales_components.amount_entry = amount_components['main_widget']
     amount_components['container'].pack()
     
-    # 2. Crear sección de importe recibido
+    # 2. Create section for amount received
     received_components = section_builder.build_section(entries_frame, widget_configs['received_section'])
     sales_components.received_entry = received_components['main_widget']
     received_components['container'].pack()
     
-    # 3. Crear sección de cambio
+    # 3. Create section for change to return
     change_components = section_builder.build_section(entries_frame, widget_configs['change_section'])
     sales_components.change_display = change_components['main_widget']
     change_components['container'].pack()
     
-    # 4. Crear sección de método de pago
+    # 4. Create section for payment method
     payment_components = section_builder.build_section(entries_frame, widget_configs['payment_method_section'])
     payment_container = payment_components['container']
     
-    # Crear StringVar para método de pago
+    # Create the payment variable
     sales_components.payment_var = widget_factory.create_widget(
         None, 
         WidgetConfig(widget_type='stringvar', initial_value="efectiu")
     )
     
-    # Crear radio buttons
+    # Create radio buttons for payment methods
     radio_configs = SalesInterfaceConfigurator.get_radio_button_configs(sales_components.payment_var)
     for radio_config in radio_configs.values():
         widget_factory.create_widget(payment_container, radio_config)
     
-    # 5. Crear sección de botones
+    # 5. Create section for buttons
     buttons_components = section_builder.build_section(entries_frame, widget_configs['buttons_section'])
     buttons_container = buttons_components['container']
     
-    # Crear botones
+    # Create buttons for reset and save
     for button_config in button_configs.values():
         widget_factory.create_widget(buttons_container, button_config)
 
 
 def setup_event_bindings(app: Tk) -> None:
-    """Configurar los event bindings"""
-    # Vincular eventos para el cálculo del cambio
+    """Configure the event bindings for the sales register interface."""
+    # Link the amount and received entries to calculate change
     if sales_components.amount_entry:
         sales_components.amount_entry.bind('<KeyRelease>', sales_components.calculate_change)
     
     if sales_components.received_entry:
         sales_components.received_entry.bind('<KeyRelease>', sales_components.calculate_change)
     
-    # Vincular tecla Escape para resetear campos
+    # Link the Escape key to reset fields
     app.bind('<Escape>', lambda e: sales_components.reset_fields())
 
 
@@ -606,9 +600,9 @@ def payment_container(app: Tk, app_window: AppWindow, frame_manager: FrameManage
    # Inicializar la base de datos
     try:
         create_sales_table()
-        logger.info("Base de datos inicializada correctamente")
+        logger.info("Base de dades inicialitzada correctament")
     except Exception as e:
-        logger.error(f"Error al inicializar la base de datos: {e}")
+        logger.error(f"Error a l'inicialitzar la base de dades: {e}")
 
     # Create register sales panel
     entries_frame = create_register_sales_panel(app, app_window, frame_manager)

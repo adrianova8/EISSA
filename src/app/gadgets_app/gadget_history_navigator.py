@@ -1,13 +1,12 @@
 import sqlite3
 import tkinter as tk
 from datetime import datetime, timedelta
+
 from src.app.window_app import AppWindow
 from src.utils.common.paths import ProjectPaths
 from src.app.utils.frame_manager import FrameManager
-from src.utils.common.names import (
-    WHITE_COLOR, BROWN_COLOR, METAL_GOLD_COLOR,
-    BLACK_COLOR, BEIGE_COLOR, GREEN_COLOR
-)
+from src.data.db.sales_record_db import get_sales_by_date
+from src.utils.common.names import (WHITE_COLOR, BROWN_COLOR, METAL_GOLD_COLOR, BLACK_COLOR, BEIGE_COLOR, GREEN_COLOR)
 
 paths = ProjectPaths()
 
@@ -41,20 +40,11 @@ def update_display(state):
         fg=METAL_GOLD_COLOR,
     ).pack(fill="x")
 
-    # Consulta a la base de datos
+    # Query the database for sales data
     sales_data = []
     try:
-        conn = sqlite3.connect(db_path)
-        cursor = conn.cursor()
-
-        query = """
-            SELECT time, amount, method
-            FROM sales
-            WHERE date = ?
-            ORDER BY time ASC
-        """
-        cursor.execute(query, (selected_date.strftime("%Y-%m-%d"),))
-        rows = cursor.fetchall()
+        selected_date = selected_date.strftime("%Y-%m-%d")
+        rows = get_sales_by_date(selected_date)
 
         for row in rows:
             sales_data.append({
@@ -62,8 +52,6 @@ def update_display(state):
                 "amount": row[1],
                 "method": row[2]
             })
-
-        conn.close()
     except sqlite3.Error as e:
         print("Error accedint a la base de dades:", e)
 

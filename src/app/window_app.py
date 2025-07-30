@@ -1,11 +1,9 @@
 
 import tkinter as tk
-from typing import Union, Optional, Tuple
+from typing import Optional, Tuple
 
 from src.utils.common.paths import ProjectPaths
-from src.utils.common.names import (
-    WHITE_COLOR, BROWN_COLOR, METAL_GOLD_COLOR,
-    BLACK_COLOR, BEIGE_COLOR, GREEN_COLOR)
+from src.utils.common.names import (BROWN_COLOR, BLACK_COLOR, BEIGE_COLOR)
 
 paths = ProjectPaths()
 
@@ -106,89 +104,6 @@ class AppWindow:
             return None
 
 
-    # def window_dimensions(
-    #     self,
-    #     screen_division: float = 2.0,
-    #     height_ratio: float = 1.2,
-    #     horizontal_position: int = 2,
-    #     vertical_position: int = 2
-    # ) -> Optional[Tuple[int, int, int, int]]:
-    #     """
-    #     Configure window dimensions and position with screen limits.
-    
-    #     Args:
-    #         screen_division (float): Screen width division factor (2 = half, 3 = third, etc).
-    #         height_ratio (float): Window height/width ratio (1.0 = square, >1 = taller).
-    #         horizontal_position (int): Horizontal position division factor (2 = center).
-    #         vertical_position (int): Vertical position division factor (2 = center).
-    
-    #     Returns:
-    #         Optional[Tuple[int, int, int, int]]: Window dimensions and position (width, height, x, y)
-    #             or None if configuration fails.
-    
-    #     Raises:
-    #         ValueError: If any input parameter is <= 0.
-    #         tk.TclError: If window geometry cannot be set.
-    #         ZeroDivisionError: If division by zero occurs during calculations.
-    #     """
-    #     try:
-    #         # Get screen dimensions
-    #         screen_width = self.app.winfo_screenwidth()
-    #         screen_height = self.app.winfo_screenheight()
-            
-    #         # Parameter validation
-    #         def validate_param(value: Union[int, float], name: str, default: Union[int, float]) -> Union[int, float]:
-    #             if value <= 0:
-    #                 raise ValueError(f"{name} must be greater than 0. Using default: {default}")
-    #             return value
-            
-    #         # Apply validations
-    #         try:
-    #             screen_division = validate_param(screen_division, "screen_division", 2.0)
-    #             height_ratio = validate_param(height_ratio, "height_ratio", 1.2)
-    #             horizontal_position = validate_param(horizontal_position, "horizontal_position", 2)
-    #             vertical_position = validate_param(vertical_position, "vertical_position", 2)
-    #         except ValueError as e:
-    #             print(f"Warning: {str(e)}")
-            
-    #         # Calculate initial dimensions
-    #         window_width = int(screen_width // screen_division)
-    #         window_height = int(window_width * height_ratio)
-            
-    #         # Ensure dimensions don't exceed screen
-    #         if window_width > screen_width:
-    #             window_width = screen_width
-    #             window_height = int(window_width * height_ratio)
-            
-    #         if window_height > screen_height:
-    #             window_height = screen_height
-    #             window_width = int(window_height / height_ratio)
-            
-    #         # Ensure window is visible (minimum 200x200)
-    #         window_width = max(200, min(window_width, screen_width))
-    #         window_height = max(200, min(window_height, screen_height))
-            
-    #         # Calculate position ensuring window stays within screen
-    #         position_x = min(max(0, int((screen_width - window_width) // horizontal_position)), screen_width - window_width)
-    #         position_y = min(max(0, int((screen_height - window_height) // vertical_position)), screen_height - window_height)
-            
-    #         # Set window geometry
-    #         geometry_data = f"{window_width}x{window_height}+{position_x}+{position_y}"
-    #         self.app.geometry(geometry_data)
-            
-    #         return window_width, window_height, position_x, position_y
-            
-    #     except tk.TclError as e:
-    #         print(f"Error setting window geometry: {str(e)}")
-    #         return None
-    #     except ZeroDivisionError as e:
-    #         print(f"Error in calculations: {str(e)}")
-    #         return None
-    #     except Exception as e:
-    #         print(f"Unexpected error: {str(e)}")
-    #         return None
-        
-
     def window_bg_color(self, color="lightblue"):
         """Configurar color de fondo de la ventana"""
         self.app.configure(bg=color)
@@ -274,7 +189,7 @@ class AppWindow:
         
         label.pack(**pack_options)
         if image:
-            label.image = image  # Mantener referencia
+            label.image = image  # Keep reference
         return label
 
 

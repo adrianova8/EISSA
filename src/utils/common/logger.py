@@ -85,10 +85,10 @@ class CustomLogger:
             self._logger.addHandler(console_handler)
             
         except OSError as e:
-            print(f"Error creating log directory: {e}")
+            self._logger.error(f"Error creating log directory: {e}")
             raise
         except Exception as e:
-            print(f"Unexpected error initializing logger: {e}")
+            self._logger.error(f"Unexpected error initializing logger: {e}")
             raise
 
     def debug(self, message: str) -> None:
@@ -179,10 +179,3 @@ class CustomLogger:
 if __name__ == "__main__":
     # Create an instance of the logger
     logger = CustomLogger()
-    
-    # Test logging at different levels
-    logger.debug("Este es un mensaje de DEBUG")
-    logger.info("Este es un mensaje de INFO")
-    logger.warning("Este es un mensaje de WARNING")
-    logger.error("Este es un mensaje de ERROR")
-    logger.critical("Este es un mensaje de CRITICAL")

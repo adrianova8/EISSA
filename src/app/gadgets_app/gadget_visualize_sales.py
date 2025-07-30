@@ -6,10 +6,7 @@ from src.utils.common.logger import CustomLogger
 from src.app.utils.frame_manager import FrameManager
 from src.app.gadgets_app.gadget_utils import current_time
 from src.data.db.sales_record_db import get_sales_by_date
-from src.utils.common.names import (
-    BROWN_COLOR, METAL_GOLD_COLOR,
-    BLACK_COLOR, BEIGE_COLOR
-)
+from src.utils.common.names import (BROWN_COLOR, METAL_GOLD_COLOR, BLACK_COLOR, BEIGE_COLOR)
 
 logger = CustomLogger()
 
@@ -172,14 +169,14 @@ def add_sale_to_visualizer_only(app_window: AppWindow, frame_manager: FrameManag
 
 def load_today_sales_from_db(app_window: AppWindow, frame_manager: FrameManager):
     """
-    Cargar las ventas del día actual desde la base de datos al visualizador
+    Load today's sales from the database into the visualizer
     """
     try:
         today = datetime.now().strftime("%Y-%m-%d")
         sales = get_sales_by_date(today)
         
         if sales:
-            logger.info(f"Cargando {len(sales)} ventas del día {today}")
+            logger.info(f"Carregant {len(sales)} vendes del dia {today}")
             
             # Cargar cada venta al visualizador
             for time_str, amount, method in sales:
@@ -191,17 +188,17 @@ def load_today_sales_from_db(app_window: AppWindow, frame_manager: FrameManager)
             sales_canvas.configure(scrollregion=sales_canvas.bbox("all"))
             sales_canvas.yview_moveto(1.0)
             
-            logger.info(f"Se han cargado {len(sales)} ventas del día actual")
+            logger.info(f"S'han carregat {len(sales)} vendes del dia actual")
         else:
-            logger.info("No hay ventas registradas para el día de hoy")
+            logger.info("No hi ha vendes registrades per al dia d'avui")
             
     except Exception as e:
-        logger.error(f"Error al cargar ventas del día desde la BD: {e}")
+        logger.error(f"Error al carregar vendes del dia desde la BD: {e}")
 
 
 def sales_visualizer_container(app_window: AppWindow, frame_manager: FrameManager) -> None:
     """
-    FUNCIÓN MODIFICADA: Ahora carga las ventas del día actual al inicializar
+    Load the current sales when the visualizer is initialized.
     """
     sales_panel = create_sales_panel(app_window, frame_manager)
 

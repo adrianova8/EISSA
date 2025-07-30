@@ -1,10 +1,10 @@
 import sqlite3
 import pandas as pd
 from pathlib import Path
-from platformdirs import user_desktop_dir
 from datetime import datetime
 from PIL import Image, ImageTk
 from tkinter import messagebox
+from platformdirs import user_desktop_dir
 
 from src.app.window_app import AppWindow
 from src.utils.common.paths import ProjectPaths
@@ -21,21 +21,21 @@ DB_NAME = f"{paths.database_dir}/sales.db"
 
 def create_export_directory():
     try:
-        # Obtener ruta del escritorio
+        # Get the user's desktop directory
         desktop = Path(user_desktop_dir())
         
-        # Obtener fecha actual
+        # Get current date components
         now = datetime.now()
         year = str(now.year)
         month = now.strftime('%B').lower()
         
-        # Crear estructura de carpetas
+        # Get the export directory path
         base_path = desktop / "Vendes_diaries_EISSA" / year / month
         base_path.mkdir(parents=True, exist_ok=True)
         
         return base_path
     except Exception as e:
-        logger.error(f"Error creando directorios: {str(e)}")
+        logger.error(f"Error creant directoris: {str(e)}")
         return None
 
 
@@ -51,7 +51,7 @@ def export_sales_to_excel(date=None):
             
         conn = sqlite3.connect(DB_NAME)
         
-        # Consulta para obtener ventas
+        # Query to get the database data
         query = """
         SELECT date, time, amount, method
         FROM sales 
@@ -66,7 +66,7 @@ def export_sales_to_excel(date=None):
             
         df.columns = ['DIA', 'HORA', 'IMPORT', 'METODE DE PAGAMENT']
         
-        # Calcular total
+        # Total calculus
         total_ventas = df['IMPORT'].sum()
         
         filename = f"vendes_eissa_{datetime.now().strftime('%Y%m%d')}.xlsx"
@@ -79,31 +79,31 @@ def export_sales_to_excel(date=None):
             workbook = writer.book
             worksheet = writer.sheets[sheet_name]
             
-            # Formato para la cabecera
+            # Header format
             header_format = workbook.add_format({
                 'bg_color': '#D3D3D3',
                 'bold': True,
                 'border': 1
             })
             
-            # Formato para el total
+            # Total format
             total_format = workbook.add_format({
                 'bold': True,
-                'bg_color': '#FFD700',  # Color dorado
+                'bg_color': '#FFD700',  # Gold color
                 'border': 1,
                 'num_format': '#,##0.00€'
             })
             
-            # Aplicar formato a la cabecera
+            # Apply format to the header row
             for col_num, value in enumerate(df.columns.values):
                 worksheet.write(0, col_num, value, header_format)
             
-            # Añadir fila de total
+            # Add data to the worksheet
             total_row = len(df) + 1
             worksheet.write(total_row, 0, "TOTAL VENDES:", total_format)
             worksheet.write(total_row, 2, total_ventas, total_format)
             
-            # Ajustar ancho de columnas
+            # Adjust column widths
             for idx, col in enumerate(df.columns):
                 series = df[col]
                 max_len = max(
@@ -118,33 +118,33 @@ def export_sales_to_excel(date=None):
         
     except Exception as e:
         messagebox.showerror("Error", f"Error al exportar l'arxiu Excel:\n{str(e)}")
-        logger.error(f"Error al exportar a Excel: {str(e)}")
+        logger.error(f"Error a l'exportar a Excel: {str(e)}")
         return False
     finally:
         if 'conn' in locals():
             conn.close()
 
 def export_excel_sales_container(app_window: AppWindow, frame_manager: FrameManager) -> None:
-    # Obtener el frame donde colocaremos el botón
+    # Get the center container frame
     center_container = frame_manager.get_frame('center_container')
     
-    # Crear frame para el botón
+    # Create the export frame
     export_frame = app_window.create_frame(
         center_container,
         bg=BEIGE_COLOR
 
     )
     
-    # Cargar y redimensionar el icono
+    # Load and resize the Excel icon
     try:
         excel_icon = search_image("excel_logo.jpeg")
         excel_icon = excel_icon.resize((20, 20), Image.Resampling.LANCZOS)
         excel_icon = ImageTk.PhotoImage(excel_icon)
     except Exception as e:
-        logger.error(f"Error cargando icono Excel: {str(e)}")
+        logger.error(f"Error carregant icona Excel: {str(e)}")
         excel_icon = None
     
-    # Crear botón de exportación con icono
+    #  Create the export button
     export_button = app_window.create_button(
         export_frame,
         text="Exportar Vendes Excel",
@@ -157,6 +157,6 @@ def export_excel_sales_container(app_window: AppWindow, frame_manager: FrameMana
         padx=10
     )
     
-    # Necesario para mantener referencia del icono
+    # Needed to display the image correctly
     export_button.image = excel_icon
     export_button.pack(pady=5)
