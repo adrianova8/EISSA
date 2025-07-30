@@ -7,11 +7,13 @@ class ProjectPaths:
     def __init__(self):
         # Paths base
         self.root_dir = Path(__file__).parents[2].absolute()
+        self.app_dir = self.root_dir / 'app'
         self.data_dir = self.root_dir / 'data'
         self.config_dir = self.root_dir / 'config'
         self.logs_dir = self.root_dir / 'logs'
         self.images_dir = self.root_dir / 'images'
         self.database_dir = self.data_dir / 'db'
+
         
         # Crear directorios necesarios
         self._create_directories()

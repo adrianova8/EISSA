@@ -4,6 +4,7 @@ from src.app.gadgets_app import gadget_manager
 from src.app.window_app import AppWindow
 from src.utils.common.logger import CustomLogger
 from src.app.utils.frame_manager import FrameManager
+# from src.app.triggers.trigger_daily_sales_report import SalesReporter
 from src.utils.common.names import BUSINESS_NAME, BEIGE_COLOR
 
 def on_escape(event):
@@ -40,6 +41,13 @@ if __name__ == "__main__":
 
     # Añadir un botón que permita descargar en formato Excel los datos de venta que se han hecho a lo largo del dia de hoy
     gadget_manager.export_excel_sales_container(app_window, frame_manager)
+
+    # Triggers
+    # 1.- Trigger 1: trigger_daily_sales_report (envio por correo de los reportes de ventas diarios)
+    # sales_reporter = SalesReporter()
+    # sales_reporter.start()
+    # #TODO 2.- Trigger 2: monthly trigger to send the monthly sales report. Monthy metrics.
+    # #TODO 3.- Trigger 3: quarterly trigger to clean the sqlite database
     
     # Bindings
     app.bind("<Escape>", on_escape)

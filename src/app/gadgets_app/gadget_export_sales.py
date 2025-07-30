@@ -44,13 +44,14 @@ def export_sales_to_excel(date=None):
         if not date:
             date = datetime.now().strftime('%Y-%m-%d')
             
-        # Crear estructura de directorios
         export_dir = create_export_directory()
         if not export_dir:
             messagebox.showerror("Error", "No s'ha pogut crear el directori d'exportació")
             return False
             
         conn = sqlite3.connect(DB_NAME)
+        
+        # Consulta para obtener ventas
         query = """
         SELECT date, time, amount, method
         FROM sales 
@@ -63,41 +64,52 @@ def export_sales_to_excel(date=None):
             messagebox.showwarning("Avís", "No hi ha vendes per exportar avui")
             return False
             
-        # df['date'] = pd.to_datetime(df['date']).dt.strftime('%H:%M:%S')
         df.columns = ['DIA', 'HORA', 'IMPORT', 'METODE DE PAGAMENT']
         
-        # Crear nombre del archivo con formato específico
+        # Calcular total
+        total_ventas = df['IMPORT'].sum()
+        
         filename = f"vendes_eissa_{datetime.now().strftime('%Y%m%d')}.xlsx"
         full_path = export_dir / filename
         
-        # Crear Excel con formato
         with pd.ExcelWriter(str(full_path), engine='xlsxwriter') as writer:
-            # Nombre de la hoja con la fecha
             sheet_name = f"Vendes del dia {datetime.now().strftime('%d-%m-%Y')}"
             df.to_excel(writer, sheet_name=sheet_name, index=False)
             
-            # Obtener el objeto workbook y worksheet
             workbook = writer.book
             worksheet = writer.sheets[sheet_name]
             
             # Formato para la cabecera
             header_format = workbook.add_format({
-                'bg_color': '#D3D3D3',  # Color gris claro
+                'bg_color': '#D3D3D3',
                 'bold': True,
                 'border': 1
+            })
+            
+            # Formato para el total
+            total_format = workbook.add_format({
+                'bold': True,
+                'bg_color': '#FFD700',  # Color dorado
+                'border': 1,
+                'num_format': '#,##0.00€'
             })
             
             # Aplicar formato a la cabecera
             for col_num, value in enumerate(df.columns.values):
                 worksheet.write(0, col_num, value, header_format)
             
-            # Ajustar ancho de columnas automáticamente
+            # Añadir fila de total
+            total_row = len(df) + 1
+            worksheet.write(total_row, 0, "TOTAL VENDES:", total_format)
+            worksheet.write(total_row, 2, total_ventas, total_format)
+            
+            # Ajustar ancho de columnas
             for idx, col in enumerate(df.columns):
                 series = df[col]
                 max_len = max(
-                    series.astype(str).map(len).max(),  # longitud máxima en la columna
-                    len(str(series.name))  # longitud del nombre de la columna
-                ) + 2  # añadir un poco de padding
+                    series.astype(str).map(len).max(),
+                    len(str(series.name))
+                ) + 2
                 worksheet.set_column(idx, idx, max_len)
 
         messagebox.showinfo("Èxit", f"Arxiu Excel creat correctament!\nRuta: {full_path}")
