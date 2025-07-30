@@ -3,7 +3,10 @@ import pandas as pd
 from pathlib import Path
 from datetime import datetime
 from PIL import Image, ImageTk
+from tkinter import ttk
+from tkinter import Toplevel
 from tkinter import messagebox
+from tkcalendar import Calendar
 from platformdirs import user_desktop_dir
 
 from src.app.window_app import AppWindow
@@ -11,7 +14,7 @@ from src.utils.common.paths import ProjectPaths
 from src.utils.common.logger import CustomLogger
 from src.app.utils.frame_manager import FrameManager
 from src.app.gadgets_app.gadget_utils import search_image
-from src.utils.common.names import (METAL_GOLD_COLOR, BEIGE_COLOR)
+from src.utils.common.names import (METAL_GOLD_COLOR, BEIGE_COLOR, BLACK_COLOR)
 
 logger = CustomLogger()
 paths = ProjectPaths()
@@ -39,10 +42,42 @@ def create_export_directory():
         return None
 
 
+def show_calendar():
+    def confirm_date():
+        selected_date = cal.get_date()
+        top.destroy()
+        export_sales_to_excel(selected_date)
+
+    top = Toplevel()
+    top.title("Calendari")
+
+    cal = Calendar(
+        top,
+        selectmode='day',
+        date_pattern='yyyy-mm-dd',
+        font="Helvetica 12",
+        background=BEIGE_COLOR,
+        foreground=BLACK_COLOR,
+        selectbackground=BEIGE_COLOR,
+        selectforeground=METAL_GOLD_COLOR,
+        headersbackground=BEIGE_COLOR,
+        headersforeground=BLACK_COLOR,
+        weekendbackground=BEIGE_COLOR,
+        weekendforeground=METAL_GOLD_COLOR
+    )
+    cal.pack(pady=10)
+
+    confirm_button = ttk.Button(top,
+                                text="Confirmar",
+                                command=confirm_date)
+    confirm_button.pack(pady=10)
+
 def export_sales_to_excel(date=None):
     try:
         if not date:
-            date = datetime.now().strftime('%Y-%m-%d')
+            show_calendar()
+            return
+
             
         export_dir = create_export_directory()
         if not export_dir:
@@ -69,7 +104,7 @@ def export_sales_to_excel(date=None):
         # Total calculus
         total_ventas = df['IMPORT'].sum()
         
-        filename = f"vendes_eissa_{datetime.now().strftime('%Y%m%d')}.xlsx"
+        filename = f"vendes_eissa_{date}.xlsx"
         full_path = export_dir / filename
         
         with pd.ExcelWriter(str(full_path), engine='xlsxwriter') as writer:
