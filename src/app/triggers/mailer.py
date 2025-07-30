@@ -1,5 +1,4 @@
 import yagmail
-import datetime
 
 class Mailer:
     def __init__(self):

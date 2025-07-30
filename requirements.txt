@@ -4,3 +4,5 @@ openpyxl
 reportlab 
 yagmail
 tkcalendar
+workalendar
+py2app

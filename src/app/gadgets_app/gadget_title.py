@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import Tk
-from PIL import Image, ImageTk
+from PIL import ImageTk
 
 from src.app.window_app import AppWindow
 from src.app.utils.frame_manager import FrameManager
