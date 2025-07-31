@@ -6,3 +6,4 @@ yagmail
 tkcalendar
 workalendar
 py2app
+pyinstaller
