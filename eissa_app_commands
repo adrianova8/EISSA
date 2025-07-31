@@ -1,0 +1,17 @@
+# How to launch the pyinstaller
+pyinstaller --noconfirm --windowed  main.py
+pyinstaller --noconfirm --windowed --icon=icon.icns main.py
+
+pyinstaller --noconfirm --onedir --windowed --icon=icon.icns --add-data "src/images/logo_images/:src/images/logo_images/" main.py
+
+# How to compile the app
+./main.app/Contents/MacOS/main
+
+
+/Users/adrianova/Desktop/Projects/EISSA/dist/main.app/Contents/Frameworks/src/data/db/sales.db
+
+
+# APP ICONS
+mkdir icon.iconset
+sips -z 256 256 /Users/adrianova/Desktop/Projects/EISSA/src/images/logo_images/png_images/eissa_sales_icon.png --out icon.iconset/icon_128x128@2x.png
+cp /Users/adrianova/Desktop/Projects/EISSA/src/images/logo_images/png_images/eissa_sales_icon.png  icon.iconset/con_512x512@2x.png

@@ -1,0 +1,33 @@
+<div class="eissa-logo-lines">EISSA</div>
+
+<style>
+.eissa-logo-lines {
+    position: relative;
+    font-family: 'Arial Black', sans-serif;
+    font-weight: 900;
+    font-size: 36px;
+    color: #D4AF37;
+    letter-spacing: 2px;
+    text-align: center;
+    display: inline-block;
+}
+
+.eissa-logo-lines::before,
+.eissa-logo-lines::after {
+    content: '';
+    position: absolute;
+    width: 60px;
+    height: 3px;
+    background: #D4AF37;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.eissa-logo-lines::before {
+    left: -80px;
+}
+
+.eissa-logo-lines::after {
+    right: -80px;
+}
+</style>

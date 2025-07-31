@@ -172,7 +172,7 @@ def export_excel_sales_container(app_window: AppWindow, frame_manager: FrameMana
     # Load and resize the Excel icon
     try:
         excel_icon = search_image("excel_logo.jpeg")
-        excel_icon = excel_icon.resize((20, 20), Image.Resampling.LANCZOS)
+        excel_icon = excel_icon.resize((15, 15), Image.Resampling.LANCZOS)
         excel_icon = ImageTk.PhotoImage(excel_icon)
     except Exception as e:
         logger.error(f"Error carregant icona Excel: {str(e)}")
