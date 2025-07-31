@@ -1,4 +1,9 @@
+# Python and virtual environment
 .DS_Store
 .vscode/
 __pycache__/
 logs/
+# Building artifacts
+dist/
+build/
+main.spec
