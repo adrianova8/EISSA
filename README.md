@@ -40,11 +40,11 @@ pip install -r requirements.txt
 
 3. Per executar:
 
-   - Fes doble clic a `main.exe`.
+   - Fes doble clic a `dist/main.exe`.
    - O obre una finestra CMD i executa:
 
      ```cmd
-     path\to\main.exe
+     path\to\dist\main.exe
      ```
 
 4. Si vols crear una instal·lació més formal:
@@ -55,7 +55,7 @@ pip install -r requirements.txt
 
 ### macOS (`.app`)
 
-1. **Descarrega o copia** el fitxer `main.app` a la carpeta `Aplicacions` o a qualsevol carpeta on vulguis instal·lar l’aplicació.
+1. **Descarrega o copia** el fitxer `dist/main.app` a la carpeta `Aplicacions` o a qualsevol carpeta on vulguis instal·lar l’aplicació.
 
 2. En la primera execució, és possible que macOS bloquegi l’aplicació per seguretat (Gatekeeper). Per permetre l’execució:
 
