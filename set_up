@@ -12,3 +12,11 @@ pyinstaller --noconfirm --onedir --windowed --icon=icon.icns --add-data "src/ima
 # How to compile the app
 ./main.app/Contents/MacOS/main or opening the app from Finder
 /Users/adrianova/Desktop/Projects/EISSA/dist/main.app/Contents/Frameworks/src/data/db/sales.db 
+
+
+########################################################################
+############################## PENDIENTES ##############################
+########################################################################
+2.- Create the diagram with draw.io 
+4.- remove the dist, buid and main.spec from the fit repository
+5.- try to launch in the windows software
