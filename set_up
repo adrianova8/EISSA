@@ -9,6 +9,9 @@ pyinstaller --noconfirm --windowed  main.py
 pyinstaller --noconfirm --windowed --icon=icon.icns main.py
 pyinstaller --noconfirm --onedir --windowed --icon=icon.icns --add-data "src/images/logo_images/:src/images/logo_images/" main.py
 
+[MacOs] pyinstaller --noconfirm --onedir --windowed --icon=icon.icns --add-data "src/images/logo_images/:src/images/logo_images/" main.py
+[windows] pyinstaller --noconfirm --onedir --windowed --icon=icon.icns --add-data "src/images/logo_images/;src/images/logo_images/" main.py
+
 # How to compile the app
 ./main.app/Contents/MacOS/main or opening the app from Finder
 /Users/adrianova/Desktop/Projects/EISSA/dist/main.app/Contents/Frameworks/src/data/db/sales.db 

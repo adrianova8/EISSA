@@ -1,9 +1,10 @@
 sqlite3
+pillow
+tkcalendar
 schedule 
 openpyxl 
 reportlab 
 yagmail
-tkcalendar
 workalendar
 py2app
 pyinstaller
