@@ -20,6 +20,4 @@ pyinstaller --noconfirm --onedir --windowed --icon=icon.icns --add-data "src/ima
 ########################################################################
 ############################## PENDIENTES ##############################
 ########################################################################
-2.- Create the diagram with draw.io 
-4.- remove the dist, buid and main.spec from the fit repository
-5.- try to launch in the windows software
+1.- Create the diagram with draw.io
