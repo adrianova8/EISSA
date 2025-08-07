@@ -6,11 +6,13 @@ from src.app.window_app import AppWindow
 from src.utils.common.paths import ProjectPaths
 from src.app.utils.frame_manager import FrameManager
 from src.data.db.sales_record_db import get_sales_by_date
-from src.utils.common.names import (WHITE_COLOR, BROWN_COLOR, METAL_GOLD_COLOR, BLACK_COLOR, BEIGE_COLOR, GREEN_COLOR)
+from src.utils.common.names import (
+    WHITE_COLOR, BROWN_COLOR, METAL_GOLD_COLOR, BLACK_COLOR, BEIGE_COLOR, GREEN_COLOR)
 
 paths = ProjectPaths()
 
 DB_NAME = f"{paths.database_dir}/sales.db"
+
 
 def update_display(state):
     app_window = state["app_window"]
@@ -19,7 +21,7 @@ def update_display(state):
     content_frame = state["content_frame"]
     date_label = state["date_label"]
     canvas = state["canvas"]
-    db_path =  DB_NAME
+    db_path = DB_NAME
 
     # Actualizar fecha
     date_str = selected_date.strftime('%d/%m/%Y')
@@ -35,7 +37,7 @@ def update_display(state):
     app_window.create_label(
         content_frame,
         text=f"Vendes del {selected_date.strftime('%d/%m/%Y')}",
-        font=("Times New Roman", 16),
+        font=("Times New Roman", 12),
         bg=BROWN_COLOR,
         fg=METAL_GOLD_COLOR,
     ).pack(fill="x")
@@ -59,7 +61,8 @@ def update_display(state):
     total_targeta = 0
 
     for sale in sales_data:
-        sale_frame = app_window.create_frame(content_frame, bg=METAL_GOLD_COLOR, relief="solid", bd=1)
+        sale_frame = app_window.create_frame(
+            content_frame, bg=METAL_GOLD_COLOR, relief="solid", bd=1)
         sale_frame.pack(fill="x")
         app_window.create_label(
             sale_frame,
@@ -96,7 +99,7 @@ def update_display(state):
     app_window.create_label(
         totals_frame,
         text=f"TOTAL: {(total_efectiu + total_targeta):.2f}€",
-        font=("Times New Roman", 14),
+        font=("Times New Roman", 13),
         bg=GREEN_COLOR,
         fg=WHITE_COLOR,
     ).pack(fill="x")
@@ -104,6 +107,7 @@ def update_display(state):
     # Scroll al final
     canvas.update_idletasks()
     canvas.yview_moveto(1.0)
+
 
 def historical_sales_navigator_container(app, app_window: AppWindow, frame_manager: FrameManager):
 
@@ -129,7 +133,7 @@ def historical_sales_navigator_container(app, app_window: AppWindow, frame_manag
     app_window.create_label(
         frame,
         text="Històric de Vendes",
-        font=("Times New Roman", 18),
+        font=("Times New Roman", 14),
         bg=BEIGE_COLOR,
         fg=BLACK_COLOR
     )
@@ -151,31 +155,33 @@ def historical_sales_navigator_container(app, app_window: AppWindow, frame_manag
         state["selected_date"] = state["current_date"]
         update_display(state)
 
-    app_window.create_button(nav_frame, "◀ Anterior", command=go_previous, font=("Times New Roman", 12),
-                             bg=BROWN_COLOR, fg=METAL_GOLD_COLOR, highlightbackground=BEIGE_COLOR, width=8).pack(side="left")
+    app_window.create_button(nav_frame, "◀ Anterior", command=go_previous, font=("Times New Roman", 12), bd=0,
+                             bg=BEIGE_COLOR, fg=BLACK_COLOR, highlightbackground=BEIGE_COLOR, width=8).pack(side="left")
 
     date_label = app_window.create_label(nav_frame, text=selected_date.strftime('%d/%m/%Y'),
-                                         font=("Times New Roman", 16), bg=BEIGE_COLOR, fg=BLACK_COLOR)
+                                         font=("Times New Roman", 14), bg=BEIGE_COLOR, fg=BLACK_COLOR)
     date_label.pack(side="left")
     state["date_label"] = date_label
 
-    app_window.create_button(nav_frame, "Següent ▶", command=go_next, font=("Times New Roman", 12),
-                             bg=BROWN_COLOR, fg=METAL_GOLD_COLOR, highlightbackground=BEIGE_COLOR, width=8).pack(side="left")
+    app_window.create_button(nav_frame, "Següent ▶", command=go_next, font=("Times New Roman", 12), bd=0,
+                             bg=BEIGE_COLOR, fg=BLACK_COLOR, highlightbackground=BEIGE_COLOR, width=8).pack(side="left")
 
-    app_window.create_button(nav_frame, "Avui", command=go_today, font=("Times New Roman", 12),
-                             bg=BROWN_COLOR, fg=METAL_GOLD_COLOR, highlightbackground=BEIGE_COLOR, width=8).pack(side="left")
+    app_window.create_button(nav_frame, "Avui", command=go_today, font=("Times New Roman", 12), bd=0,
+                             bg=BEIGE_COLOR, fg=BLACK_COLOR, highlightbackground=BEIGE_COLOR, width=8).pack(side="left")
 
     nav_frame.pack()
 
     info_frame = app_window.create_frame(frame, bg=BEIGE_COLOR)
     canvas = tk.Canvas(info_frame, bg=BEIGE_COLOR, width=300, height=400,
                        highlightthickness=2, highlightbackground=BROWN_COLOR)
-    scrollbar = tk.Scrollbar(info_frame, orient="vertical", command=canvas.yview)
+    scrollbar = tk.Scrollbar(
+        info_frame, orient="vertical", command=canvas.yview)
     canvas.configure(yscrollcommand=scrollbar.set)
     state["canvas"] = canvas
 
     content_frame = app_window.create_frame(canvas, bg=BEIGE_COLOR)
-    canvas_window = canvas.create_window((0, 0), window=content_frame, anchor="nw")
+    canvas_window = canvas.create_window(
+        (0, 0), window=content_frame, anchor="nw")
     state["content_frame"] = content_frame
 
     def configure_scroll(event=None):

@@ -4,9 +4,10 @@ from src.app.window_app import AppWindow
 from src.utils.common.logger import CustomLogger
 from src.app.utils.frame_manager import FrameManager
 from src.app.gadgets_app.gadget_utils import current_time
-from src.utils.common.names import MEDIUM_GRAY_COLOR, METAL_GOLD_COLOR, BROWN_COLOR
+from src.utils.common.names import METAL_GOLD_COLOR, BROWN_COLOR
 
 logger = CustomLogger()
+
 
 def date_container(app_window: AppWindow, frame_manager: FrameManager) -> None:
     """
@@ -35,7 +36,7 @@ def date_container(app_window: AppWindow, frame_manager: FrameManager) -> None:
         # Create outer date frame with border
         date_outer_frame = app_window.create_frame(
             header_frame,
-            bg=BROWN_COLOR,  
+            bg=BROWN_COLOR,
             side="right",
             padx=10
         )
@@ -53,7 +54,7 @@ def date_container(app_window: AppWindow, frame_manager: FrameManager) -> None:
         date_label = app_window.create_label(
             date_inner_frame,
             text=date,
-            font=("Times New Roman",25),
+            font=("Times New Roman", 20),
             bg=BROWN_COLOR,
             fg=METAL_GOLD_COLOR
         )

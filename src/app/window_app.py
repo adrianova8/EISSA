@@ -1,4 +1,3 @@
-
 import tkinter as tk
 from typing import Optional, Tuple
 
@@ -7,8 +6,9 @@ from src.utils.common.names import (BROWN_COLOR, BLACK_COLOR, BEIGE_COLOR)
 
 paths = ProjectPaths()
 
+
 class AppWindow:
-    def __init__(self, app: tk.Tk):
+    def _init_(self, app: tk.Tk):
         """
         Initialize AppWindow with a Tkinter root window.
 
@@ -74,7 +74,6 @@ class AppWindow:
             print(f"Unexpected error: {str(e)}")
             return None
 
-
     def window_title(self, title: str) -> Optional[bool]:
         """
         Set the window title with error handling.
@@ -92,10 +91,10 @@ class AppWindow:
         try:
             if not isinstance(title, str):
                 raise TypeError("Title must be a string")
-                
+
             self.app.title(title)
             return True
-            
+
         except tk.TclError as e:
             print(f"Error setting window title: {str(e)}")
             return None
@@ -103,15 +102,13 @@ class AppWindow:
             print(f"Unexpected error: {str(e)}")
             return None
 
-
     def window_bg_color(self, color="lightblue"):
         """Configurar color de fondo de la ventana"""
         self.app.configure(bg=color)
 
-
     def create_frame(
-        self, 
-        parent: Optional[tk.Widget] = None, 
+        self,
+        parent: Optional[tk.Widget] = None,
         bg: str = "lightblue",
         side: str = None,
         fill: str = None,
@@ -138,12 +135,12 @@ class AppWindow:
         """
         parent = parent or self.app
         frame = tk.Frame(parent, bg=bg, **kwargs)
-        
-        pack_options = {'side': side, 'fill': fill, 'expand': expand, 
-                       'padx': padx, 'pady': pady}
+
+        pack_options = {'side': side, 'fill': fill, 'expand': expand,
+                        'padx': padx, 'pady': pady}
         # Eliminar opciones None
         pack_options = {k: v for k, v in pack_options.items() if v is not None}
-        
+
         frame.pack(**pack_options)
         return frame
 
@@ -183,15 +180,14 @@ class AppWindow:
             image=image,
             **kwargs
         )
-        
+
         pack_options = {'side': side}
         pack_options = {k: v for k, v in pack_options.items() if v is not None}
-        
+
         label.pack(**pack_options)
         if image:
             label.image = image  # Keep reference
         return label
-
 
     def create_entry(
         self,
@@ -229,13 +225,13 @@ class AppWindow:
             width=width,
             **kwargs
         )
-        
+
         pack_options = {'side': side}
         pack_options = {k: v for k, v in pack_options.items() if v is not None}
-        
+
         entry.pack(**pack_options)
         return entry
-    
+
     def create_button(
         self,
         parent: tk.Widget,
@@ -274,16 +270,16 @@ class AppWindow:
             font=font,
             bg=bg,
             fg=fg,
-            activebackground = BROWN_COLOR,
-            activeforeground = BEIGE_COLOR,
-            highlightbackground = BEIGE_COLOR,
-            highlightcolor = BEIGE_COLOR,
+            activebackground=BROWN_COLOR,
+            activeforeground=BEIGE_COLOR,
+            highlightbackground=BEIGE_COLOR,
+            highlightcolor=BEIGE_COLOR,
             **kwargs
         )
-        
+
         pack_options = {'side': side}
         pack_options = {k: v for k, v in pack_options.items() if v is not None}
-        
+
         button.pack(**pack_options)
         return button
 
@@ -298,7 +294,7 @@ class AppWindow:
             tk.StringVar: Created StringVar instance
         """
         return tk.StringVar(value=initial_value)
-    
+
     def create_radio_button(
         self,
         parent: tk.Widget,
@@ -341,10 +337,9 @@ class AppWindow:
             fg=fg,
             **kwargs
         )
-        
+
         pack_options = {'side': side}
         pack_options = {k: v for k, v in pack_options.items() if v is not None}
-        
+
         radio_button.pack(**pack_options)
         return radio_button
-
