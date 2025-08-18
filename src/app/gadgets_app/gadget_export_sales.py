@@ -400,7 +400,7 @@ def export_excel_sales_container(app_window: "AppWindow", frame_manager: "FrameM
         # Create the export button
         export_button = app_window.create_button(
             export_frame,
-            text="Export Sales to Excel",
+            text="Exportar Vendes a Excel",
             image=excel_icon,
             compound="top",
             command=lambda: select_sales_period(app_window),
