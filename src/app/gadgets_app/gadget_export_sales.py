@@ -38,7 +38,7 @@ def create_export_directory(year: Optional[str] = None,
     """
     try:
         desktop = Path(user_desktop_dir())
-        base_path = desktop / "Vendes_diaries_EISSA"
+        base_path = desktop / "Vendes_EISSA"
 
         if year:
             base_path /= year
@@ -48,7 +48,7 @@ def create_export_directory(year: Optional[str] = None,
         if day:
             weekday_name = calendar.day_name[date(
                 int(year), int(month), int(day)).weekday()]
-            base_path /= f"{day}_{weekday_name}"
+            base_path /= f"{weekday_name}_{day}"
 
         base_path.mkdir(parents=True, exist_ok=True)
         return base_path
@@ -142,7 +142,7 @@ def export_sales_to_excel(year: Optional[str] = None,
         df = pd.read_sql_query(query, conn, params=params)
 
         if df.empty:
-            messagebox.showwarning("Avís", "No vendes a exportar")
+            messagebox.showwarning("Avís", "No hi ha vendes a exportar")
             return False
 
         df.columns = ['DAY', 'TIME', 'AMOUNT', 'PAYMENT METHOD']
