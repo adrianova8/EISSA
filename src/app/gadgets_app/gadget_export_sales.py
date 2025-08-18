@@ -142,7 +142,7 @@ def export_sales_to_excel(year: Optional[str] = None,
         df = pd.read_sql_query(query, conn, params=params)
 
         if df.empty:
-            messagebox.showwarning("Notice", "No sales to export")
+            messagebox.showwarning("Avís", "No vendes a exportar")
             return False
 
         df.columns = ['DAY', 'TIME', 'AMOUNT', 'PAYMENT METHOD']
