@@ -48,9 +48,9 @@ def update_display(state):
 
         for row in rows:
             sales_data.append({
-                "time": row[0],
-                "amount": row[1],
-                "method": row[2]
+                "time": row[1],
+                "amount": row[2],
+                "method": row[3]
             })
     except sqlite3.Error as e:
         print("Error accedint a la base de dades:", e)
