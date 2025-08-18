@@ -149,16 +149,16 @@ def export_sales_to_excel(year: Optional[str] = None,
         total_sales = df['AMOUNT'].sum()
 
         if day:
-            filename = f"sales_{year}_{month}_{day}.xlsx"
+            filename = f"vendes_EISSA_{year}_{month}_{day}.xlsx"
         elif month:
-            filename = f"sales_{year}_{month}.xlsx"
+            filename = f"vendes_EISSA_{year}_{month}.xlsx"
         else:
-            filename = f"sales_{year}.xlsx"
+            filename = f"vendes_EISSA_{year}.xlsx"
 
         full_path = export_dir / filename
 
         with pd.ExcelWriter(str(full_path), engine='xlsxwriter') as writer:
-            sheet_name = f"Sales {year}-{month}-{day}"
+            sheet_name = f"Vendes {year}-{month}-{day}"
             df.to_excel(writer, sheet_name=sheet_name, index=False)
 
             workbook = writer.book
@@ -173,7 +173,7 @@ def export_sales_to_excel(year: Optional[str] = None,
                 worksheet.write(0, col_num, value, header_format)
 
             total_row = len(df) + 1
-            worksheet.write(total_row, 0, "TOTAL SALES:", total_format)
+            worksheet.write(total_row, 0, "TOTAL VENDES:", total_format)
             worksheet.write(total_row, 2, total_sales, total_format)
 
             for idx, col in enumerate(df.columns):
@@ -182,7 +182,7 @@ def export_sales_to_excel(year: Optional[str] = None,
                     len).max(), len(str(series.name))) + 2
                 worksheet.set_column(idx, idx, max_len)
 
-        messagebox.showinfo("Success", f"Excel file created:\n{full_path}")
+        messagebox.showinfo("Èxit", f"Arxiu Excel creat:\n{full_path}")
         logger.info(f"Fitxer Excel creat correctament: {full_path}")
         return True
 
