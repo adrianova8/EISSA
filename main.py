@@ -24,7 +24,7 @@ def handle_window_state(event):
             width_ratio=0.8, height_ratio=0.8, center=True)
 
 
-if _name_ == "_main_":
+if __name__ == "__main__":
     logger = CustomLogger()
     logger.info("Starting the application...")
     app = tk.Tk()

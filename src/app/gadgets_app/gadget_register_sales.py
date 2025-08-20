@@ -7,6 +7,7 @@ from typing import Dict, Any, Optional
 from src.app.window_app import AppWindow
 from src.utils.common.logger import CustomLogger
 from src.app.utils.frame_manager import FrameManager
+from src.app.gadgets_app.gadget_visualize_sales import refresh_sales_view
 from src.data.db.sales_record_db import create_sales_table, insert_sale
 from src.utils.common.names import (
     WHITE_COLOR, BROWN_COLOR, METAL_GOLD_COLOR, BLACK_COLOR, BEIGE_COLOR, GREEN_COLOR)
@@ -54,7 +55,7 @@ class SectionConfig:
 class WidgetFactory:
     """Factory for creating widgets consistently"""
 
-    def _init_(self, app_window: AppWindow):
+    def __init__(self, app_window: AppWindow):
         self.app_window = app_window
 
     def create_widget(self, parent: tk.Widget, config: WidgetConfig) -> tk.Widget:
@@ -122,7 +123,7 @@ class WidgetFactory:
 class SectionBuilder:
     """Builder to create complete interface sections"""
 
-    def _init_(self, widget_factory: WidgetFactory):
+    def __init__(self, widget_factory: WidgetFactory):
         self.widget_factory = widget_factory
 
     def build_section(self, parent: tk.Widget, config: SectionConfig) -> Dict[str, tk.Widget]:
@@ -173,8 +174,8 @@ class SalesRegisterComponents:
         self.received_entry = None
         self.change_display = None
         self.payment_var = None
-        self.frame_manager = None
-        self.app_window = None
+        self.frame_manager = FrameManager()
+        self.app_window = AppWindow(app=None)
 
     def calculate_change(self, *args):
         """Calculate and update change amount"""
@@ -226,12 +227,13 @@ class SalesRegisterComponents:
                 insert_sale(current_date, current_time, amount, payment_method)
                 logger.info(
                     f"Venda guardada a la BD: {amount}€ - {payment_method} - {current_date} {current_time}")
+                refresh_sales_view(self.app_window, self.frame_manager)
             except Exception as db_error:
                 logger.error(f"Error al guardar en base de datos: {db_error}")
                 # Continúa con el proceso aunque falle la BD
 
-            add_sale_to_visualizer(
-                self.frame_manager, self.app_window, amount, payment_method)
+            # add_sale_to_visualizer(
+            #     self.frame_manager, self.app_window, amount, payment_method)
 
             self.reset_fields()
             logger.info(f"Venda guardada: {amount}€ - {payment_method}")

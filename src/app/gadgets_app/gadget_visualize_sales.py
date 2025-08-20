@@ -1,7 +1,9 @@
+import sqlite3
 import tkinter as tk
 from datetime import datetime
 
 from src.app.window_app import AppWindow
+from src.utils.common.paths import ProjectPaths
 from src.utils.common.logger import CustomLogger
 from src.app.utils.frame_manager import FrameManager
 from src.app.gadgets_app.gadget_utils import current_time
@@ -10,7 +12,8 @@ from src.utils.common.names import (
     BROWN_COLOR, METAL_GOLD_COLOR, BLACK_COLOR, BEIGE_COLOR)
 
 logger = CustomLogger()
-
+paths = ProjectPaths()
+DB_NAME = f"{paths.database_dir}/sales.db"
 
 def create_sales_panel(app_window: AppWindow, frame_manager: FrameManager) -> tk.Frame:
     center_container = frame_manager.get_frame('center_container')
@@ -130,7 +133,7 @@ def create_scroll_buttons(app_window: AppWindow, parent: tk.Frame, canvas: tk.Ca
 
 
 def add_sale_to_visualizer_only(app_window: AppWindow, frame_manager: FrameManager,
-                                time_str: str, amount: float, payment_method: str,
+                                sale_id: int, time_str: str, amount: float, payment_method: str,
                                 update_totals: bool = True):
     """
     Función para añadir una venta al visualizador sin duplicar en BD
@@ -155,6 +158,17 @@ def add_sale_to_visualizer_only(app_window: AppWindow, frame_manager: FrameManag
         pady=3
     )
     sales_label.pack(anchor="w", fill="x")
+
+    # Botón edición de venta
+    edit_button = app_window.create_button(
+        sale_frame,
+        text="€",  # ✏"️",
+        bg=BEIGE_COLOR,
+        fg=METAL_GOLD_COLOR,
+        command=lambda: open_edit_window(
+            app_window, frame_manager, sale_id, amount, payment_method)
+    )
+    edit_button.pack(side="right", padx=5)
 
     # Actualizar totales si se solicita
     if update_totals:
@@ -193,9 +207,9 @@ def load_today_sales_from_db(app_window: AppWindow, frame_manager: FrameManager)
             logger.info(f"Carregant {len(sales)} vendes del dia {today}")
 
             # Cargar cada venta al visualizador
-            for time_str, amount, method in sales:
+            for sale_id, time_str, amount, method in sales:
                 add_sale_to_visualizer_only(
-                    app_window, frame_manager, time_str, amount, method)
+                    app_window, frame_manager, sale_id, time_str, amount, method)
 
             # Actualizar scroll para mostrar la última venta
             sales_canvas = frame_manager.get_frame('sales_canvas')
@@ -209,6 +223,64 @@ def load_today_sales_from_db(app_window: AppWindow, frame_manager: FrameManager)
 
     except Exception as e:
         logger.error(f"Error al carregar vendes del dia desde la BD: {e}")
+
+
+def open_edit_window(app_window: AppWindow, frame_manager: FrameManager,
+                     sale_id: int, amount: float, payment_method: str):
+
+    edit_win = tk.Toplevel(app_window.app)
+    edit_win.title("Editar venta")
+
+    app_window.create_label(edit_win, text="Quantitat:").pack()
+    amount_var = app_window.create_string_var(str(amount))
+    app_window.create_entry(edit_win, textvariable=amount_var).pack()
+
+    app_window.create_label(edit_win, text="Mètode:").pack(pady=5)
+    method_var = app_window.create_string_var(str(payment_method))
+    app_window.create_option_menu(
+        edit_win, method_var, ["Efectiu", "Targeta"]).pack()
+
+    def save_changes():
+        try:
+            conn = sqlite3.connect(DB_NAME)
+            cursor = conn.cursor()
+            cursor.execute("""
+                UPDATE sales 
+                SET amount = ?, method = ?
+                WHERE id = ?
+            """, (float(amount_var.get()), method_var.get(), sale_id))
+            conn.commit()
+            conn.close()
+            edit_win.destroy()
+
+            # Refrescar visualizador
+            refresh_sales_view(app_window, frame_manager)
+
+        except Exception as e:
+            print("Error actualizando venta:", e)
+
+    tk.Button(edit_win, text="Guardar", command=save_changes).pack(pady=10)
+
+
+def refresh_sales_view(app_window: tk.Tk, frame_manager: FrameManager) -> None:
+    """
+    Clears and reloads today's sales in the sales viewer.
+    Args:
+        app_window (tk.Tk): The main application window.
+        frame_manager (Any): Object that manages frames and provides access
+                             to the 'sales_content' frame.
+    Returns:
+        None
+    """
+    # Get the frame that contains the sales
+    frame = frame_manager.get_frame('sales_content')
+
+    # Remove all widgets from the frame
+    for widget in frame.winfo_children():
+        widget.destroy()
+
+    # Reload today's sales from the database
+    load_today_sales_from_db(app_window, frame_manager)
 
 
 def sales_visualizer_container(app_window: AppWindow, frame_manager: FrameManager) -> None:
@@ -235,7 +307,5 @@ def sales_visualizer_container(app_window: AppWindow, frame_manager: FrameManage
     frame_manager.register_frame('card_total', card_total)
     frame_manager.register_frame('total_sales', total_sales)
 
-    # NUEVO: Cargar ventas del día actual desde la base de datos
-    # Usamos after() para asegurar que todos los widgets estén inicializados
     frame_manager.get_frame('sales_panel').after(100,
                                                  lambda: load_today_sales_from_db(app_window, frame_manager))

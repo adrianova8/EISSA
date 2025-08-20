@@ -32,7 +32,7 @@ def get_sales_by_date(date: str):
     with sqlite3.connect(DB_NAME) as conn:
         cursor = conn.cursor()
         cursor.execute('''
-            SELECT time, amount, method FROM sales
+            SELECT id, time, amount, method FROM sales
             WHERE date = ?
             ORDER BY time ASC
         ''', (date,))

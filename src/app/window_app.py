@@ -8,7 +8,7 @@ paths = ProjectPaths()
 
 
 class AppWindow:
-    def _init_(self, app: tk.Tk):
+    def __init__(self, app: tk.Tk):
         """
         Initialize AppWindow with a Tkinter root window.
 
@@ -149,7 +149,7 @@ class AppWindow:
         parent: tk.Widget,
         text: str = "",
         font: tuple = None,
-        bg: str = "lightblue",
+        bg: str = None,
         fg: str = "black",
         image: tk.PhotoImage = None,
         side: str = None,
@@ -188,6 +188,54 @@ class AppWindow:
         if image:
             label.image = image  # Keep reference
         return label
+
+
+    def create_option_menu(
+            self,
+            parent: tk.Widget,
+            variable: tk.StringVar,
+            options: list[str],
+            default: str = None,
+            font: tuple = None,
+            bg: str = None,
+            fg: str = "black",
+            side: str = None,
+            **kwargs
+        ) -> tk.OptionMenu:
+            """
+            Create an OptionMenu with specified configuration.
+            Args:
+                parent: Parent widget
+                variable: StringVar to hold the selected value
+                options: List of options for the menu
+                default: Default selected value (if None, uses first option)
+                font: Font tuple (family, size, style)
+                bg: Background color
+                fg: Foreground color
+                side: Pack side option
+                **kwargs: Additional configuration options
+            Returns:
+                tk.OptionMenu: Created OptionMenu
+            """
+            if default is None and options:
+                variable.set(options[0])
+            elif default is not None:
+                variable.set(default)
+
+            option_menu = tk.OptionMenu(parent, variable, *options)
+
+            # Apply styles (need to access 'menu' separately)
+            option_menu.config(font=font, bg=bg, fg=fg, **kwargs)
+            menu = option_menu["menu"]
+            menu.config(font=font, bg=bg, fg=fg)
+
+            # Pack options
+            pack_options = {"side": side}
+            pack_options = {k: v for k, v in pack_options.items() if v is not None}
+            option_menu.pack(**pack_options)
+
+            return option_menu
+
 
     def create_entry(
         self,

@@ -15,9 +15,3 @@ pyinstaller --noconfirm --onedir --windowed --icon=icon.icns --add-data "src/ima
 # How to compile the app
 ./main.app/Contents/MacOS/main or opening the app from Finder
 /Users/adrianova/Desktop/Projects/EISSA/dist/main.app/Contents/Frameworks/src/data/db/sales.db 
-
-
-########################################################################
-############################## PENDIENTES ##############################
-########################################################################
-1.-The diagram with draw.io 
